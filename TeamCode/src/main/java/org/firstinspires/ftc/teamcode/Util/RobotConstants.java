@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Util;
 
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class RobotConstants {
-    public static int MAGIC_NUMBER = 32;
     public static Double VericalSlideP = (double) 0;
     public static Double VericalSlideI = (double) 0;
     public static Double VericalSlideD = (double) 0;
