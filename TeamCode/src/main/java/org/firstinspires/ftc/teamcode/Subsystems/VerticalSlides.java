@@ -56,7 +56,7 @@ public class VerticalSlides extends SDKSubsystem {
 	// encoder
 	private final Cell<EnhancedDoubleSupplier> encoder = subsystemCell(() -> new EnhancedDoubleSupplier(() -> (double) left.get().getCurrentPosition()));
 	//Current Monitor
-	private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> (double) left.get().getCurrent(CurrentUnit.AMPS)));
+	private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> left.get().getCurrent(CurrentUnit.AMPS)));
 	// controller
 	private double target = 0.0;
 	private final CachedMotionComponentSupplier<Double> targetSupplier = new CachedMotionComponentSupplier<>(motionComponent -> {
@@ -102,7 +102,6 @@ public class VerticalSlides extends SDKSubsystem {
 
 	public double getCurrentChange(){
 		return(current.get().rawVelocity());
-
 	}
 	// init hook, to handle init config
 	@Override
@@ -117,9 +116,8 @@ public class VerticalSlides extends SDKSubsystem {
 	}
 	
 	public Lambda runToPosition(double target) {
-		return new Lambda("run_to_position")
+		return new Lambda("run_to_position-vertical")
 				.setInit(() -> setTarget(target))
 				.setFinish(() -> controller.get().finished());
 	}
-
 }

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideD;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideI;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideP;
-
+import static org.firstinspires.ftc.teamcode.RobotHardware.*;
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -119,9 +119,9 @@ public class HorizontalSlides extends SDKSubsystem {
 	public void preUserStartHook(@NonNull Wrapper opMode) {
 		controller.get().setEnabled(true);
 	}
-	
+
 	public Lambda runToPosition(double target) {
-		return new Lambda("run_to_position")
+		return new Lambda("run-to-position-horizontal")
 				.setInit(() -> setTarget(target))
 				.setFinish(() -> controller.get().finished());
 

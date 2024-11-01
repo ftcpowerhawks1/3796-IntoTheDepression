@@ -13,13 +13,25 @@ public class IntakeRotationTuning extends LinearOpMode {
     EnhancedBooleanSupplier decrease = Pasteurized.gamepad1().b();
     public static final IntakeSubsystem intake = new IntakeSubsystem();
     double position = 0.0;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        if (increase.onTrue()){
-            position+=0.1;
+
+        while (opModeIsActive() && isStopRequested()) {
+            if (increase.onTrue()) {
+                position += 0.1;
+            }
+            if (decrease.onTrue()) {
+                position -= 0.1;
+            }
+
+            if (position != intake.getPosition()) {
+                intake.setPosition(position);
+            }
+            telemetry.addData("Position: ", position);
+            telemetry.update();
+
         }
-        if (decrease.onTrue()){
-            position-=0.1;
-        }
+
     }
 }

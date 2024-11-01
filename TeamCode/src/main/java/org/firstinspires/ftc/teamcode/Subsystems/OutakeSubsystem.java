@@ -23,9 +23,9 @@ import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
 import dev.frozenmilk.util.cell.Cell;
 
-public class IntakeSubsystem extends SDKSubsystem {
-    public static final IntakeSubsystem INSTANCE = new IntakeSubsystem();
-    public IntakeSubsystem() { }
+public class OutakeSubsystem extends SDKSubsystem {
+    public static final OutakeSubsystem INSTANCE = new OutakeSubsystem();
+    public OutakeSubsystem() { }
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     @Inherited
@@ -43,24 +43,16 @@ public class IntakeSubsystem extends SDKSubsystem {
     }
 
     // hardware
-    private final Cell<CachingServo> intakePivot = subsystemCell(() -> getHardwareMap().get(CachingServo.class, "intakePivotServo"));
-    private final Cell<CachingCRServo> intake = subsystemCell(() -> getHardwareMap().get(CachingCRServo.class, "intake"));
-    private final Cell<RevColorSensorV3> intakeColorSensor = subsystemCell(() -> getHardwareMap().get(RevColorSensorV3.class, "color"));
-
+    private final Cell<CachingServo> outTakePivotLeft = subsystemCell(() -> getHardwareMap().get(CachingServo.class, "intakePivotServo"));
+    private final Cell<CachingServo> outTakePivotRight = subsystemCell(() -> getHardwareMap().get(CachingServo.class, "intake"));
 
     // set target method
     public void setPosition(double Position) {
-         intakePivot.get().setPosition(Position);
+        outTakePivotLeft.get().setPosition(Position);
+        outTakePivotRight.get().setPosition(Position);
     }
     public double getPosition() {
-        return(intakePivot.get().getPosition());
-    }
-
-    private void cashedIntakeCommand(double power) {
-        intakePivot.get().setPosition(1);
-        if (intake.get().getPower() != power) {
-            intake.get().setPower(power);
-        }
+        return(outTakePivotLeft.get().getPosition());
     }
 
     // init hook, to handle init config
@@ -74,18 +66,8 @@ public class IntakeSubsystem extends SDKSubsystem {
     public void preUserStartHook(@NonNull Wrapper opMode) {
 
     }
-    public Lambda intake(double power) {
-        return new Lambda("intake")
-                .setInit(() -> cashedIntakeCommand(1))
-                .setFinish(() -> intakeColorSensor.get().getDistance(DistanceUnit.MM) <= 5);
-    }
-    public Lambda returnIntake(double target) {
-        return new Lambda("return-intake")
-                .setInit(() -> setPosition(target));
-    }
 
-    Sequential intakeCommand = new Sequential (
-        new Lambda("intake"),
-        new Lambda("return-intake")
+    Sequential dump = new Sequential (
+        //TODO FINISH OUTTAKE LOGIC
     );
 }
