@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.tuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 
@@ -9,6 +10,7 @@ import dev.frozenmilk.dairy.pasteurized.Pasteurized;
 
 
 @HorizontalSlides.Attach
+@TeleOp(name="HorizontalPIDTuning", group = "Tuning")
 public class HorizontalPIDTuning extends LinearOpMode {
     EnhancedBooleanSupplier increase = Pasteurized.gamepad1().a();
     EnhancedBooleanSupplier decrease = Pasteurized.gamepad1().b();

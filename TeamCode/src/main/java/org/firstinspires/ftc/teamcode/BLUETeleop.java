@@ -9,30 +9,33 @@ import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
 import org.firstinspires.ftc.teamcode.Subsystems.OutakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.RobotHardware;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.VerticalSlides;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 
 import dev.frozenmilk.mercurial.Mercurial;
 import dev.frozenmilk.mercurial.commands.groups.Sequential;
 
 @org.firstinspires.ftc.teamcode.Util.BulkReads.Attach
+
 @HorizontalSlides.Attach
-@OutakeSubsystem.Attach
 @VerticalSlides.Attach
-@IntakeSubsystem.Attach
 @LimelightHelper.Attach
+@IntakeSubsystem.Attach
+@OutakeSubsystem.Attach
+
 @TeleOp(name = "BlueTeleop", group = "Teleop")
 public class BLUETeleop extends RobotHardware {
     LimelightHelper limelightHelper;
     IntakeSubsystem intakeSubsystem;
     @Override
     public void init() {
-        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-        LimelightHelper limelightHelper = new LimelightHelper();
+        intakeSubsystem = new IntakeSubsystem();
+        limelightHelper = new LimelightHelper();
     }
 
     @Override
     public void loop() {
-        Mercurial.gamepad1().a().whileTrue(new Sequential(intakeSubsystem.intake(1).then(intakeSubsystem.returnIntake())));
-        Mercurial.gamepad1().a().onFalse(intakeSubsystem.returnIntake());
+        Mercurial.gamepad1().a().toggleTrue(new IntakeCommand());
+
         if (limelightHelper.getTX().isPresent()) {
             telemetry.addData("Tx: ", limelightHelper.getTX().isPresent());
         }
@@ -45,7 +48,6 @@ public class BLUETeleop extends RobotHardware {
         } else {
             telemetry.addData(">","No Yellow Detected");
         }
-
 
         telemetry.update();
     }

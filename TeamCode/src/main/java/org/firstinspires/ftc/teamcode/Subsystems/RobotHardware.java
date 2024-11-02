@@ -36,8 +36,5 @@ public abstract class RobotHardware extends OpMode {
     public DcMotorEx getRightFront() { return rightFront.get(); }
 
 
-    //Gamepad Buttons
-    public EnhancedBooleanSupplier intakeCommand = Pasteurized.gamepad1().a();
-    public EnhancedBooleanSupplier intakeCancelCommand = Pasteurized.gamepad1().b();
 
 }
