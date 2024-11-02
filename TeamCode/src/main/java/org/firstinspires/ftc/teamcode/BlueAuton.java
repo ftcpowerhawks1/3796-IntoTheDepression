@@ -5,9 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.OutakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.RobotHardware;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.VerticalSlides;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
+
+import dev.frozenmilk.mercurial.Mercurial;
+import dev.frozenmilk.mercurial.commands.Lambda;
 
 @org.firstinspires.ftc.teamcode.Util.BulkReads.Attach
 
@@ -18,15 +22,21 @@ import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
 @OutakeSubsystem.Attach
 
 @Autonomous(name = "BlueAuto", group = "Auto", preselectTeleOp = "BlueTeleop")
-public class BlueAuton extends OpMode {
+public class BlueAuton extends RobotHardware {
     HorizontalSlides horizontalSlides;
     VerticalSlides verticalSlides;
     LimelightHelper limelightHelper;
     IntakeSubsystem intakeSubsystem;
     OutakeSubsystem outakeSubsystem;
 
+    Alliance alliance;
+    Side side;
+
     @Override
     public void init() {
+
+        side = Side.LEFT;
+        alliance = Alliance.BLUE;
         //Init Subsystems
         HorizontalSlides horizontalSlides = new HorizontalSlides();
         VerticalSlides verticalSlides = new VerticalSlides();
@@ -34,6 +44,31 @@ public class BlueAuton extends OpMode {
         IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
         OutakeSubsystem outakeSubsystem = new OutakeSubsystem();
 
+    }
+
+    @Override
+    public void init_loop() {
+        if (Mercurial.gamepad1().dpadUp().onTrue()) {alliance = Alliance.RED;}
+        if (Mercurial.gamepad1().dpadDown().onTrue()) {alliance = Alliance.BLUE;}
+        if (Mercurial.gamepad1().dpadLeft().onTrue()) {side = Side.LEFT;}
+        if (Mercurial.gamepad1().dpadRight().onTrue()) {side = Side.RIGHT;}
+
+        if (alliance == Alliance.RED) {
+            telemetry.addData("Current Alliance: ", "Red");
+        } else {
+            telemetry.addData("Current Alliance: ", "Blue");
+        }
+
+        if (side == Side.LEFT) {
+            telemetry.addData("Current Side: ", "Left");
+        } else {
+            telemetry.addData("Current Side: ", "Right");
+        }
+
+        telemetry.addData("Press Dpad Up for Red Alliance", "Press Dpad Down for Blue Alliance");
+        telemetry.addData("Press Dpad Left for Left Side", "Press Dpad Right for Right Side");
+
+        telemetry.update();
     }
 
     @Override
@@ -46,6 +81,10 @@ public class BlueAuton extends OpMode {
 
     @Override
     public void loop() {
+        telemetry.addData("Limelight TX: ", limelightHelper.getTX());
+        telemetry.addData("Vertical Encoder: ", verticalSlides.getVerticalEncoder());
 
+
+        telemetry.update();
     }
 }

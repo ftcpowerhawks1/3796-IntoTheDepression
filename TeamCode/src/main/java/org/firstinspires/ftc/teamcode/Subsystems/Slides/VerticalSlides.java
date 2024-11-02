@@ -104,6 +104,7 @@ public class VerticalSlides extends SDKSubsystem {
 	public double getCurrentChange(){
 		return(current.get().rawVelocity());
 	}
+	public double getVerticalEncoder() {return(encoder.get().state());}
 
 	public boolean getVerticalControllerFinished(){return(controller.get().finished());}
 	public void resetVerticalEncoder() {

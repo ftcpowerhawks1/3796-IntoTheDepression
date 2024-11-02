@@ -90,7 +90,7 @@ public class HorizontalSlides extends SDKSubsystem {
 			)
 	);
 	
-	// set target method
+	//Commands
 	private void setTarget(double target) {
 		controller.get().setEnabled(true);
 		this.target = target;
@@ -111,6 +111,7 @@ public class HorizontalSlides extends SDKSubsystem {
 		return(current.get().state());
 	}
 
+	public double getHorizontalEncoder() {return(encoder.get().state());}
 	public double getCurrentChange(){
 		return(current.get().rawVelocity());
 

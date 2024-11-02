@@ -35,5 +35,13 @@ public abstract class RobotHardware extends OpMode {
     public DcMotorEx getRightFront() { return rightFront.get(); }
 
 
+    public enum Alliance {
+        RED,
+        BLUE
+    }
 
+    public enum Side {
+        LEFT,
+        RIGHT
+    }
 }
