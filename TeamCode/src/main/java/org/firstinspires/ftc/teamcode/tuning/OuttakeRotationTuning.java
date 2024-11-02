@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
-import dev.frozenmilk.dairy.pasteurized.Pasteurized;
 @TeleOp(name="OuttakeRotationTuning", group = "Tuning")
 public class OuttakeRotationTuning extends LinearOpMode {
 

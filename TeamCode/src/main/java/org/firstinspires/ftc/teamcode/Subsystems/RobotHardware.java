@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import dev.frozenmilk.dairy.core.util.OpModeLazyCell;
 import dev.frozenmilk.dairy.core.util.features.BulkRead;
-import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
-import dev.frozenmilk.dairy.pasteurized.Pasteurized;
+
 
 // lets add that BulkRead feature from Writing + Using Features
 @BulkRead.Attach

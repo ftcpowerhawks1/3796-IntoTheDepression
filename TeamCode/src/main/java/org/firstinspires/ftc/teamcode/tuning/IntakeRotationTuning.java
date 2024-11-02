@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 
 import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
 import dev.frozenmilk.dairy.pasteurized.Pasteurized;
-import dev.frozenmilk.dairy.pasteurized.PasteurizedGamepad;
 
 @TeleOp(name="IntakeRotationTuning", group = "Tuning")
 public class IntakeRotationTuning extends LinearOpMode {

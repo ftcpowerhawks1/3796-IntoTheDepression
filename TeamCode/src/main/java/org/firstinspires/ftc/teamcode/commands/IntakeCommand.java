@@ -7,7 +7,6 @@ import java.util.Set;
 
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Command;
-import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.commands.groups.Parallel;
 
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
