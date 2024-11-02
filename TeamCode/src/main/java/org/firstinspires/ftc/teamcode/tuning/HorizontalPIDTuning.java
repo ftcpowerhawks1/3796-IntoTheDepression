@@ -1,33 +1,32 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 
 import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
 import dev.frozenmilk.dairy.pasteurized.Pasteurized;
-import dev.frozenmilk.dairy.pasteurized.PasteurizedGamepad;
 
-public class IntakeRotationTuning extends LinearOpMode {
+
+@HorizontalSlides.Attach
+public class HorizontalPIDTuning extends LinearOpMode {
     EnhancedBooleanSupplier increase = Pasteurized.gamepad1().a();
     EnhancedBooleanSupplier decrease = Pasteurized.gamepad1().b();
-    public static final IntakeSubsystem intake = new IntakeSubsystem();
-    double position = 0.0;
+    public static final HorizontalSlides HORIZONTAL_SLIDES = new HorizontalSlides();
+    double position = 500;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         while (opModeIsActive() && isStopRequested()) {
             if (increase.onTrue()) {
-                position += 0.1;
+                position += 5;
             }
             if (decrease.onTrue()) {
-                position -= 0.1;
+                position -= 5;
             }
 
-            if (position != intake.getPosition()) {
-                intake.setPosition(position);
-            }
+            HORIZONTAL_SLIDES.runToPosition(position);
             telemetry.addData("Position: ", position);
             telemetry.update();
 

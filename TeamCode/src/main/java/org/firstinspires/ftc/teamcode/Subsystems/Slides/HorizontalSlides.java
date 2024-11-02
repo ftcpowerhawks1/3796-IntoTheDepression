@@ -1,11 +1,12 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideD;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideI;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.horizontalSlideP;
-import static org.firstinspires.ftc.teamcode.RobotHardware.*;
+
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -31,7 +32,7 @@ import dev.frozenmilk.util.cell.Cell;
 
 public class HorizontalSlides extends SDKSubsystem {
 	public static final HorizontalSlides INSTANCE = new HorizontalSlides();
-	private HorizontalSlides() { }
+	public HorizontalSlides() { }
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	@Inherited
@@ -91,21 +92,37 @@ public class HorizontalSlides extends SDKSubsystem {
 	
 	// set target method
 	private void setTarget(double target) {
+		controller.get().setEnabled(true);
 		this.target = target;
 		targetSupplier.reset();
 	}
 
-	public double getVerticalVelocity(){
+	private void retract() {
+		controller.get().setEnabled(false);
+		left.get().setPower(-1);
+		right.get().setPower(-1);
+	}
+
+	public double getHorizontalVelocity(){
 		return(this.encoder.get().rawVelocity());
 	}
 
-	public double getVerticalCurrent(){
+	public double getHorizontalCurrent(){
 		return(current.get().state());
 	}
 
 	public double getCurrentChange(){
 		return(current.get().rawVelocity());
 
+	}
+	public void resetHorizontalEncoder() {
+		left.get().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+		targetSupplier.reset();
+
+	}
+
+	public boolean currentSpiked(){
+		return(getCurrentChange()>= (double) 5);
 	}
 
 	// init hook, to handle init config
@@ -125,6 +142,12 @@ public class HorizontalSlides extends SDKSubsystem {
 				.setInit(() -> setTarget(target))
 				.setFinish(() -> controller.get().finished());
 
+	}
+
+	public Lambda retractionScript() {
+		return new Lambda("retract-horizontal")
+				.setInit(this::retract)
+				.setFinish(this::currentSpiked);
 	}
 
 }

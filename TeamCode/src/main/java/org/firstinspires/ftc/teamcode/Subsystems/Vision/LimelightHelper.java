@@ -1,30 +1,26 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Optional;
 
-import dev.frozenmilk.dairy.cachinghardware.CachingCRServo;
-import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
-import dev.frozenmilk.dairy.core.wrapper.OpModeWrapper;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
-import dev.frozenmilk.mercurial.commands.Lambda;
-import dev.frozenmilk.mercurial.commands.groups.Sequential;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
 import dev.frozenmilk.util.cell.Cell;
@@ -80,7 +76,31 @@ public class LimelightHelper extends SDKSubsystem {
         } else {
             yellowSamplePipeline();
         }
+        Limelight.get().start();
     }
     //TODO FINISH LIMELIGHT LOGIC
+
+    /**3796 Is the return value of no object**/
+    public Optional<Double> getTX() {
+        LLResult result = Limelight.get().getLatestResult();
+        if (result != null) {
+            return(Optional.of(result.getTx()));
+        } else {
+            return(Optional.empty());
+        }
+    }
+
+    public Pose3D getBotpose() {
+        LLResult result = Limelight.get().getLatestResult();
+        if(result != null) {
+            if (result.isValid()){
+                return(result.getBotpose());
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 
 }

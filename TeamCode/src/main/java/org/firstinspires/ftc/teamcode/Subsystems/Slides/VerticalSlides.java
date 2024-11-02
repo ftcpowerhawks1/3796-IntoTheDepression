@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.VericalSlideD;
 import static org.firstinspires.ftc.teamcode.Util.RobotConstants.VericalSlideI;
@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.Util.RobotConstants.VericalSlideP;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -31,7 +32,7 @@ import dev.frozenmilk.util.cell.Cell;
 
 public class VerticalSlides extends SDKSubsystem {
 	public static final VerticalSlides INSTANCE = new VerticalSlides();
-	private VerticalSlides() { }
+	public VerticalSlides() { }
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	@Inherited
@@ -103,6 +104,11 @@ public class VerticalSlides extends SDKSubsystem {
 	public double getCurrentChange(){
 		return(current.get().rawVelocity());
 	}
+
+	public void resetVerticalEncoder() {
+		left.get().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+		targetSupplier.reset();
+	}
 	// init hook, to handle init config
 	@Override
 	public void preUserInitHook(@NonNull Wrapper opMode) {
@@ -120,4 +126,6 @@ public class VerticalSlides extends SDKSubsystem {
 				.setInit(() -> setTarget(target))
 				.setFinish(() -> controller.get().finished());
 	}
+
+
 }

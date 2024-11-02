@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import androidx.annotation.NonNull;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -18,7 +20,6 @@ import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Lambda;
-import dev.frozenmilk.mercurial.commands.groups.Sequential;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
 import dev.frozenmilk.util.cell.Cell;
@@ -55,6 +56,11 @@ public class IntakeSubsystem extends SDKSubsystem {
     public double getPosition() {
         return(intakePivot.get().getPosition());
     }
+    public Boolean distanceTripped(){return(intakeColorSensor.get().getDistance(DistanceUnit.MM) <= 5);}
+
+    public NormalizedRGBA getColor(){
+        return(intakeColorSensor.get().getNormalizedColors());
+    }
 
     private void cashedIntakeCommand(double power) {
         intakePivot.get().setPosition(1);
@@ -76,16 +82,11 @@ public class IntakeSubsystem extends SDKSubsystem {
     }
     public Lambda intake(double power) {
         return new Lambda("intake")
-                .setInit(() -> cashedIntakeCommand(1))
-                .setFinish(() -> intakeColorSensor.get().getDistance(DistanceUnit.MM) <= 5);
+                .setInit(() -> cashedIntakeCommand(power));
     }
-    public Lambda returnIntake(double target) {
+    public Lambda returnIntake() {
         return new Lambda("return-intake")
-                .setInit(() -> setPosition(target));
+                .setInit(() -> setPosition(0));
     }
 
-    Sequential intakeCommand = new Sequential (
-        new Lambda("intake"),
-        new Lambda("return-intake")
-    );
 }
