@@ -124,6 +124,8 @@ public class HorizontalSlides extends SDKSubsystem {
 	public boolean currentSpiked(){
 		return(getCurrentChange()>= (double) 5);
 	}
+	public boolean getHorizontalControllerFinished(){return(controller.get().finished());}
+
 
 	// init hook, to handle init config
 	@Override

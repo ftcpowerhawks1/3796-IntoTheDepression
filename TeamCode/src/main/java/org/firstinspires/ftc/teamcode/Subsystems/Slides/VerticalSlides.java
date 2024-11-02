@@ -105,6 +105,7 @@ public class VerticalSlides extends SDKSubsystem {
 		return(current.get().rawVelocity());
 	}
 
+	public boolean getVerticalControllerFinished(){return(controller.get().finished());}
 	public void resetVerticalEncoder() {
 		left.get().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		targetSupplier.reset();

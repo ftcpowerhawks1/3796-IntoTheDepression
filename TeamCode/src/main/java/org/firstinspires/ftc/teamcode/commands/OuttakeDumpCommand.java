@@ -2,30 +2,33 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import androidx.annotation.NonNull;
 
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem.Attach;
+import org.firstinspires.ftc.teamcode.Subsystems.OutakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.Slides.VerticalSlides;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Command;
-import dev.frozenmilk.mercurial.commands.groups.Parallel;
 
 @Attach
 public class OuttakeDumpCommand implements Command {
-    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
+    OutakeSubsystem outakeSubsystem = new OutakeSubsystem();
+    VerticalSlides verticalSlides = new VerticalSlides();
     @Override
     public void initialise() {
         //TODO ADD SLIDE EXTENSION LAMBDA
-        intakeSubsystem.intake(1);
     }
 
     @NonNull
     @Override
     public Set<Object> getRequirements() {
-        return Collections.singleton(intakeSubsystem);
+        Set<Object> returnset = new HashSet<>();
+        returnset.add(outakeSubsystem);
+        returnset.add(verticalSlides);
+        return(returnset);
     }
 
     @NonNull
@@ -34,21 +37,15 @@ public class OuttakeDumpCommand implements Command {
         return Collections.singleton(Wrapper.OpModeState.ACTIVE);
     }
 
-    @Override
-    public void end(boolean b) {
-        new Parallel(
-                //TODO ADD SLIDE RETRACTION LAMBDA
-                intakeSubsystem.returnIntake()
-        );
-    }
 
     @Override
-    public void execute() {
-
-    }
+    public void execute() {}
 
     @Override
     public boolean finished() {
-        return intakeSubsystem.distanceTripped();
+        return(verticalSlides.getVerticalControllerFinished());
     }
+
+    @Override
+    public void end(boolean b) {}
 }
