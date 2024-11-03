@@ -45,4 +45,18 @@ public abstract class RobotHardware extends OpMode {
         LEFT,
         RIGHT
     }
+
+    public enum LeftAutonState {
+        PRELOAD,
+        RIGHTSAMPLE,
+        SCORERIGHTSAMPLE,
+        MIDDLESAMPLE,
+        SCOREMIDDLESAMPLE,
+        LEFTSAMPLE,
+        SCORELEFTSAMPLE,
+        PICKUPCYCLE,
+        SCORECYCLE,
+        PARK,
+        IDLE
+    }
 }

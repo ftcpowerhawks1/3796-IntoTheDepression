@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
@@ -10,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Slides.VerticalSlides;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
 
 import dev.frozenmilk.mercurial.Mercurial;
+import dev.frozenmilk.mercurial.commands.groups.Sequential;
 
 @org.firstinspires.ftc.teamcode.Util.BulkReads.Attach
 
@@ -29,12 +32,14 @@ public class BlueAuton extends RobotHardware {
 
     Alliance alliance;
     Side side;
+    LeftAutonState leftAutonState;
 
     @Override
     public void init() {
 
         side = Side.LEFT;
         alliance = Alliance.BLUE;
+        leftAutonState = LeftAutonState.PRELOAD;
         //Init Subsystems
         HorizontalSlides horizontalSlides = new HorizontalSlides();
         VerticalSlides verticalSlides = new VerticalSlides();
@@ -67,9 +72,10 @@ public class BlueAuton extends RobotHardware {
     @Override
     public void start() {
         super.start();
-        intakeSubsystem.returnIntake();
-        outakeSubsystem.reset();
-
+        new Sequential (
+                outakeSubsystem.reset(),
+                intakeSubsystem.returnIntake()
+        );
     }
 
     @Override
@@ -77,7 +83,68 @@ public class BlueAuton extends RobotHardware {
         telemetry.addData("Limelight TX: ", limelightHelper.getTX());
         telemetry.addData("Vertical Encoder: ", verticalSlides.getVerticalEncoder());
 
-
         telemetry.update();
+
+
+    }
+
+
+    public boolean drivebusy() {
+        return(true);
+    }
+
+    public void testingLogic() {
+        switch (side) {
+            case LEFT:
+                switch (leftAutonState) {
+                    case PRELOAD:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.RIGHTSAMPLE;
+                        }
+                    case RIGHTSAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.SCORERIGHTSAMPLE;
+                        }
+                    case SCORERIGHTSAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.MIDDLESAMPLE;
+                        }
+                    case MIDDLESAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.SCOREMIDDLESAMPLE;
+                        }
+                    case SCOREMIDDLESAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.LEFTSAMPLE;
+                        }
+                    case LEFTSAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.SCORELEFTSAMPLE;
+                        }
+                    case SCORELEFTSAMPLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.PICKUPCYCLE;
+                        }
+                    case PICKUPCYCLE:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.SCORECYCLE;
+                        }
+                    case SCORECYCLE:
+                        if (!drivebusy()) {
+                            if (getRuntime() >= 20) {
+                                leftAutonState = LeftAutonState.PARK;
+                            } else {
+                                leftAutonState = LeftAutonState.PICKUPCYCLE;
+                            }
+                        }
+                    case PARK:
+                        if (!drivebusy()) {
+                            leftAutonState = LeftAutonState.IDLE;
+                        }
+                    case IDLE:
+
+                }
+            case RIGHT:
+        }
     }
 }
