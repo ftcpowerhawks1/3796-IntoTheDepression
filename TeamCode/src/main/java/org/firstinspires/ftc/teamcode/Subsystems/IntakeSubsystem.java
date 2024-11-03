@@ -84,6 +84,11 @@ public class IntakeSubsystem extends SDKSubsystem {
         return new Lambda("intake")
                 .setInit(() -> cashedIntakeCommand(power));
     }
+
+    public Lambda outtake(double power) {
+        return new Lambda("intake")
+                .setInit(() -> cashedIntakeCommand(-power));
+    }
     public Lambda returnIntake() {
         return new Lambda("return-intake")
                 .setInit(() -> setPosition(0));

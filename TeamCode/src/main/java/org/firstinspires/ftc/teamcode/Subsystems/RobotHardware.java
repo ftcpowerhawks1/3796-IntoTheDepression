@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import dev.frozenmilk.dairy.cachinghardware.CachingDcMotorEx;
 import dev.frozenmilk.dairy.core.util.OpModeLazyCell;
 import dev.frozenmilk.dairy.core.util.features.BulkRead;
 
@@ -13,17 +14,17 @@ import dev.frozenmilk.dairy.core.util.features.BulkRead;
 public abstract class RobotHardware extends OpMode {
     // lets add OpModeLazyCells for each hardware item
     private final OpModeLazyCell<DcMotorEx> leftFront
-            = new OpModeLazyCell<>(() -> hardwareMap.get(DcMotorEx.class, "lf"));
+            = new OpModeLazyCell<>(() -> hardwareMap.get(CachingDcMotorEx.class, "lf"));
     private final OpModeLazyCell<DcMotorEx> leftBack
-            = new OpModeLazyCell<>(() -> hardwareMap.get(DcMotorEx.class, "lb"));
+            = new OpModeLazyCell<>(() -> hardwareMap.get(CachingDcMotorEx.class, "lb"));
     // right motors need some additional setup
     private final OpModeLazyCell<DcMotorEx> rightBack = new OpModeLazyCell<>(() -> {
-        DcMotorEx m = hardwareMap.get(DcMotorEx.class, "rb");
+        DcMotorEx m = hardwareMap.get(CachingDcMotorEx.class, "rb");
         m.setDirection(DcMotorSimple.Direction.REVERSE);
         return m;
     });
     private final OpModeLazyCell<DcMotorEx> rightFront = new OpModeLazyCell<>(() -> {
-        DcMotorEx m = hardwareMap.get(DcMotorEx.class, "rf");
+        DcMotorEx m = hardwareMap.get(CachingDcMotorEx.class, "rf");
         m.setDirection(DcMotorSimple.Direction.REVERSE);
         return m;
     });

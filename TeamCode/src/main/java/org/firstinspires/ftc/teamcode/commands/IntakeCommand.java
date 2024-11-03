@@ -8,14 +8,16 @@ import java.util.Set;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Command;
 import dev.frozenmilk.mercurial.commands.groups.Parallel;
+import dev.frozenmilk.mercurial.commands.groups.Sequential;
 
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem.*;
+import org.firstinspires.ftc.teamcode.Subsystems.OutakeSubsystem;
 
 @Attach
 public class IntakeCommand implements Command {
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
+    OutakeSubsystem outtakeSubsystem = new OutakeSubsystem();
     @Override
     public void initialise() {
         //TODO ADD SLIDE EXTENSION LAMBDA
@@ -37,9 +39,12 @@ public class IntakeCommand implements Command {
     @Override
     public void end(boolean b) {
         new Parallel(
+                outtakeSubsystem.reset(),
                 //TODO ADD SLIDE RETRACTION LAMBDA
                 intakeSubsystem.returnIntake()
         );
+
+
     }
 
     @Override
