@@ -152,5 +152,4 @@ public class HorizontalSlides extends SDKSubsystem {
 				.setInit(this::retract)
 				.setFinish(this::currentSpiked);
 	}
-
 }

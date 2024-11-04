@@ -80,6 +80,15 @@ public class LimelightHelper extends SDKSubsystem {
     }
     //TODO FINISH LIMELIGHT LOGIC
 
+
+    @Override
+    public void preUserLoopHook(@NonNull Wrapper opMode) {
+        if (getTX().isPresent()) {
+            opMode.getOpMode().telemetry.addData("Tx: ", getTX().isPresent());
+        }
+
+    }
+
     /**3796 Is the return value of no object**/
     public Optional<Double> getTX() {
         LLResult result = Limelight.get().getLatestResult();

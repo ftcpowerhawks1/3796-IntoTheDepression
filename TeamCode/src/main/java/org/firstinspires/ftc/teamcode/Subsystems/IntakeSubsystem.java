@@ -56,6 +56,8 @@ public class IntakeSubsystem extends SDKSubsystem {
     public double getPosition() {
         return(intakePivot.get().getPosition());
     }
+
+
     public Boolean distanceTripped(){return(intakeColorSensor.get().getDistance(DistanceUnit.MM) <= 5);}
 
     public NormalizedRGBA getColor(){
@@ -68,6 +70,8 @@ public class IntakeSubsystem extends SDKSubsystem {
             intake.get().setPower(power);
         }
     }
+
+
 
     // init hook, to handle init config
     @Override
