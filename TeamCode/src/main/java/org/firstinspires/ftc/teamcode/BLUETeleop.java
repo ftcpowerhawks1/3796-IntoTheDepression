@@ -60,7 +60,7 @@ public class BLUETeleop extends RobotHardware {
 
     }
 
-    void fieldOriented () {
+    void fieldOriented() {
         if (Mercurial.gamepad1().options().onTrue()) {
             imu.resetYaw();
             telemetry.addData("gyro reset", "");
