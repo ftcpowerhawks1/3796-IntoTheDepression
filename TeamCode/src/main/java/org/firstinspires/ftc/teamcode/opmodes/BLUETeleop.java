@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 
 import android.view.View;
@@ -9,24 +9,28 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
+import org.firstinspires.ftc.teamcode.Subsystems.OutakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.RobotHardware;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides.VerticalSlides;
-import org.firstinspires.ftc.teamcode.Subsystems.Vision.LimelightHelper;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 
 import dev.frozenmilk.mercurial.Mercurial;
 
 @org.firstinspires.ftc.teamcode.Util.BulkReads.Attach
+
 @HorizontalSlides.Attach
 @VerticalSlides.Attach
+@LimelightHelper.Attach
 @IntakeSubsystem.Attach
+@OutakeSubsystem.Attach
+
 @TeleOp(name = "BlueTeleop", group = "Teleop")
-public class REDTeleop extends RobotHardware {
+public class BLUETeleop extends RobotHardware {
     LimelightHelper limelightHelper;
     IntakeSubsystem intakeSubsystem;
-    View relativeLayout;
     IMU imu;
-    double botHeading,previousimu,X,Y,turn,previousX,previousY,previousturn,componentX,componentY,rotX,rotY,previousComponentX,previousComponentY = 0;
+    double botHeading,previousRobotHeading,X,Y,turn,previousX,previousY, previousTurn,componentX,componentY,rotX,rotY,previousComponentX,previousComponentY = 0;
 
     DcMotorEx frontLeft, frontRight, backLeft, backRight;
 
@@ -35,7 +39,7 @@ public class REDTeleop extends RobotHardware {
         intakeSubsystem = new IntakeSubsystem();
         limelightHelper = new LimelightHelper();
 
-        IMU imu = getIMU();
+        imu = getIMU();
         frontLeft = getLeftFront();
         frontRight = getRightFront();
         backLeft = getLeftBack();
@@ -44,19 +48,30 @@ public class REDTeleop extends RobotHardware {
 
     @Override
     public void loop() {
+        fieldOriented();
+
+        Mercurial.gamepad1().a().toggleTrue(new IntakeCommand());
+
+        intakeColorDetectionTest();
+
+        updateFieldOrientedComponents();
+
+        telemetry.update();
+
+    }
+
+    void fieldOriented() {
         if (Mercurial.gamepad1().options().onTrue()) {
             imu.resetYaw();
             telemetry.addData("gyro reset", "");
         }
-
-        Mercurial.gamepad1().a().toggleTrue(new IntakeCommand());
 
         X = Mercurial.gamepad1().leftStickX().state();
         Y = Mercurial.gamepad1().leftStickY().state();
         turn = Mercurial.gamepad1().rightStickX().state();
         botHeading = imu.getRobotYawPitchRollAngles().getYaw();
 
-        if (botHeading == previousimu)  {
+        if (botHeading == previousRobotHeading)  {
             if (X == previousX) {
                 componentX = previousComponentX;
             } else {
@@ -85,12 +100,16 @@ public class REDTeleop extends RobotHardware {
         backLeft.setPower(backLeftPower);
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
-
-
-
-        if (limelightHelper.getTX().isPresent()) {
-            telemetry.addData("Tx: ", limelightHelper.getTX().isPresent());
-        }
+    }
+    void updateFieldOrientedComponents() {
+        previousX=X;
+        previousY=Y;
+        previousRobotHeading =botHeading;
+        previousTurn =turn;
+        previousComponentY = componentY;
+        previousComponentX = componentX;
+    }
+    void intakeColorDetectionTest() {
         telemetry.addData("Red: ", intakeSubsystem.getColor().red);
         telemetry.addData("Green: ", intakeSubsystem.getColor().green);
         telemetry.addData("Blue: ", intakeSubsystem.getColor().blue);
@@ -100,16 +119,5 @@ public class REDTeleop extends RobotHardware {
         } else {
             telemetry.addData(">","No Yellow Detected");
         }
-
-        telemetry.update();
-
-        previousX=X;
-        previousY=Y;
-        previousimu=botHeading;
-        previousturn=turn;
-        previousComponentY = componentY;
-        previousComponentX = componentX;
-
-
     }
 }
