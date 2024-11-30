@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Constants.OutakeConst;
+import org.firstinspires.ftc.teamcode.Constants.OuttakeConst;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -49,8 +49,8 @@ public class Outtake extends SDKSubsystem {
     public static OuttakePivotState outtakePivotState;
 
     //Hardware
-    private final Cell<CachingServo> outtakePivotLeft = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OutakeConst.outtakePivotLeft)));
-    private final Cell<CachingServo> outtakePivotRight = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OutakeConst.outtakePivotRight)));
+    private final Cell<CachingServo> outtakePivotLeft = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OuttakeConst.outtakePivotLeft)));
+    private final Cell<CachingServo> outtakePivotRight = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OuttakeConst.outtakePivotRight)));
 
     public void setPivotPosition(double position) {
         outtakePivotLeft.get().setPosition(position);
@@ -62,12 +62,12 @@ public class Outtake extends SDKSubsystem {
     public void setPivot(OuttakePivotState outtakePivotState){
         switch (outtakePivotState) {
             case OUT:
-                outtakePivotRight.get().setPosition(OutakeConst.scoringPos);
-                outtakePivotLeft.get().setPosition(OutakeConst.scoringPos);
+                outtakePivotRight.get().setPosition(OuttakeConst.scoringPos);
+                outtakePivotLeft.get().setPosition(OuttakeConst.scoringPos);
                 break;
             case IN:
-                outtakePivotRight.get().setPosition(OutakeConst.homePos);
-                outtakePivotLeft.get().setPosition(OutakeConst.homePos);
+                outtakePivotRight.get().setPosition(OuttakeConst.homePos);
+                outtakePivotLeft.get().setPosition(OuttakeConst.homePos);
                 break;
 
         }
