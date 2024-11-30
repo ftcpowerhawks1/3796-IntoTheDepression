@@ -1,25 +1,26 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePos;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.commands.*;
-import org.firstinspires.ftc.teamcode.subsystems.*;
+import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 
 import dev.frozenmilk.mercurial.Mercurial;
-import dev.frozenmilk.mercurial.commands.groups.Parallel;
-import dev.frozenmilk.mercurial.commands.groups.Sequential;
-import dev.frozenmilk.mercurial.commands.util.Wait;
 
 @Mercurial.Attach
 @HorizontalSlides.Attach
 @VerticalSlides.Attach
 @Drive.Attach
-@TeleOp(name = "Main TeleOp")
-public class opmode extends OpMode {
+@Intake.Attach
+@TeleOp(name = "Testing TeleOp")
+public class opmodeWithIntake extends OpMode {
     ColorSensor color;
 
     @Override
@@ -28,7 +29,7 @@ public class opmode extends OpMode {
 
         Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
         Mercurial.gamepad2().a()
-                .onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND));
+                .onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND).then(Intake.INSTANCE.setPivot(intakePos)));
 
         Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.HOME));
 
@@ -36,6 +37,7 @@ public class opmode extends OpMode {
         Mercurial.gamepad2().dpadUp().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.MID_SCORING));
 
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
+
 
 
     }

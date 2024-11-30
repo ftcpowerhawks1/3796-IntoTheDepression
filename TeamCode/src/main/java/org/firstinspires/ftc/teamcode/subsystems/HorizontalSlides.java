@@ -56,9 +56,8 @@ public class HorizontalSlides extends SDKSubsystem {
     }
 
     public enum SlideState {
-        HIGH_SCORING,
-        MID_SCORING,
-        SPECIMEN_SCORING,
+        FULL_EXTEND,
+        HALF_EXTEND,
         HOME
     }
 
@@ -133,14 +132,11 @@ public class HorizontalSlides extends SDKSubsystem {
 
     public void setSlides(SlideState slideState) {
         switch (slideState) {
-            case HIGH_SCORING:
-                setTarget(highScoringPos);
+            case FULL_EXTEND:
+                setTarget(fullIntakeExtend);
                 break;
-            case MID_SCORING:
-                setTarget(midScoringPos);
-                break;
-            case SPECIMEN_SCORING:
-                setTarget(specimenScoringPos);
+            case HALF_EXTEND:
+                setTarget(halfIntakeExtend);
                 break;
             case HOME:
                 setTarget(homePos);

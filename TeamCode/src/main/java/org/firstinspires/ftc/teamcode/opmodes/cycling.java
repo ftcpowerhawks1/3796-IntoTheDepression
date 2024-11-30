@@ -37,7 +37,7 @@ public class cycling extends OpMode {
     @Override
     public void loop() {
 
-        if (color.red() >= 100) {
+        if (color.red() >= 100 || color.blue() >= 100) {
             target = 0;
         }
 

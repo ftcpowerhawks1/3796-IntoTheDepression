@@ -20,28 +20,28 @@ public class Constants {
         public static final String VERTICALLEFT = "Verticalleft";
         public static final String VERTICALRIGHT = "Verticalright";
 
-        public static final double highScoringPos = 1500;
-        public static final double midScoringPos = 0.0;
+
+        public static final double fullIntakeExtend = -1500;
+        public static final double halfIntakeExtend = -750;
+
+        public static final double highScoringPos = -5000;
+        public static final double midScoringPos = -2500;
         public static final double specimenScoringPos = 0.0;
-        public static final double intakePos = 1600.0;
         public static final double homePos = 0.0;
     }
 
 
 
     public static final class Intake {
-        public static final String intakePivotLeft = "intakePivotLeft";
-        public static final String intakePivotRight = "intakePivotRight";
+        public static final String intakePivot = "intakePivot";
         public static final String intake = "intake";
-        public static final String rotatingIntake = "rotatingIntake";
-        public static final double scoringPos = 0.4;
-        public static final double specimenScoringPos = 0.0;
-        public static final double intakePos = 1;
-        public static final double homePos = 0.72;
-        public static final double clawOpenPos = 0.5;
-        public static final double clawClosedPos = 0.23;
-        public static final double rotation0Pos = 0.5;
-        public static final double rotation90Pos = 0.83;
+        public static final double intakePos = 0;
+        public static final double depositPos = 0.3;
+        public static final double intakePower = 1;
+        public static final double outtakePower = -1;
+
+
+
     }
 
 

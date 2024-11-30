@@ -11,15 +11,15 @@ import java.util.Set;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Command;
 
-public class intakeCommad implements Command {
+public class intakeCommand implements Command {
     HorizontalSlides.SlideState slideState;
 
-    public intakeCommad() {
+    public intakeCommand() {
     }
 
     @Override
     public void initialise() {
-        HorizontalSlides.INSTANCE.runToPosition(-1500);
+        HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND);
     }
 
     @Override

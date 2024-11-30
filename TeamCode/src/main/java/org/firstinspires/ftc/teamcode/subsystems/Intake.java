@@ -1,14 +1,26 @@
-/*
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.Constants.Intake.*;
-
+import static org.firstinspires.ftc.teamcode.Constants.Intake.depositPos;
+import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePos;
+import static org.firstinspires.ftc.teamcode.Constants.Slides.highScoringPos;
+import static org.firstinspires.ftc.teamcode.Constants.Slides.homePos;
+import static org.firstinspires.ftc.teamcode.Constants.Slides.midScoringPos;
+import static org.firstinspires.ftc.teamcode.Constants.Slides.specimenScoringPos;
+import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesD;
+import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesI;
+import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesP;
 
 import androidx.annotation.NonNull;
 
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.pid.DoubleComponent;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -20,6 +32,10 @@ import dev.frozenmilk.dairy.cachinghardware.CachingCRServo;
 import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
+import dev.frozenmilk.dairy.core.util.controller.implementation.DoubleController;
+import dev.frozenmilk.dairy.core.util.supplier.numeric.CachedMotionComponentSupplier;
+import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedDoubleSupplier;
+import dev.frozenmilk.dairy.core.util.supplier.numeric.MotionComponents;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
@@ -48,120 +64,67 @@ public class Intake extends SDKSubsystem {
         this.dependency = dependency;
     }
 
-    public enum IntakePivotState {
-        INTAKE,
-        HOME
+    public enum IntakeState {
+        INTAKING,
+        OUTTAKING,
+        EXTENDED,
+        RETRACTED
     }
 
-    public static IntakePivotState intakePivotState;
+    public static IntakeState intakeState;
 
-    //hardware
-    private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivotLeft)));
-    private final Cell<CachingServo> intake = subsystemCell(() -> new CachingCRServo(getHardwareMap().get(Servo.class, Constants.Intake.intake)));
+    //motors
+    private final Cell<CachingCRServo> intake = subsystemCell(() -> new CachingCRServo(getHardwareMap().get(CRServo.class, Constants.Slides.VERTICALRIGHT)));
+    private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Slides.VERTICALLEFT)));
 
-    //set target method
-    public void setPivotPosition(double position) {
-        intakePivotLeft.get().setPosition(position);
-        intakePivotRight.get().setPosition(position);
-    }
-    public double getPivotPosition() {
-        return intakePivotLeft.get().getPosition();
-    }
-    public void setPivot(IntakePivotState intakePivotState) {
-        switch (intakePivotState) {
-            case SCORING:
-                intakePivotLeft.get().setPosition(scoringPos);
-                intakePivotRight.get().setPosition(scoringPos);
+    public void setIntake(IntakeState Intakestate) {
+        switch (intakeState) {
+            case INTAKING:
+                setIntakePivot(intakePos);
                 break;
-            case SPECIMEN_SCORING:
-                intakePivotLeft.get().setPosition(specimenScoringPos);
-                intakePivotRight.get().setPosition(specimenScoringPos);
+            case OUTTAKING:
+                setIntakePivot(depositPos);
                 break;
-            case INTAKE:
-                intakePivotLeft.get().setPosition(intakePos);
-                intakePivotRight.get().setPosition(intakePos);
+            case EXTENDED:
+                setIntakePivot(intakePos);
                 break;
-            case HOME:
-                intakePivotLeft.get().setPosition(homePos);
-                intakePivotRight.get().setPosition(homePos);
+            case RETRACTED:
+                setIntakePivot(depositPos);
                 break;
         }
-        Intake.intakePivotState = intakePivotState;
+        Intake.intakeState = Intakestate;
     }
 
-    public void setClawPosition(double position) {
-        intake.get().setPosition(position);
-    }
 
-    public void setRotation(double rotation) {
-        rotatingIntake.get().setPosition(rotation);
-    }
 
-    public void clawOpen(boolean open) {
-
-        if (open) {
-            intake.get().setPosition(clawOpenPos);
-            Intake.clawState = ClawState.OPEN;
-        }
-        else {
-            intake.get().setPosition(clawClosedPos);
-            Intake.clawState = ClawState.CLOSED;
-        }
-    }
-
-    public void clawOpenAndClose() {
-        switch (Intake.clawState) {
-            case OPEN:
-                intake.get().setPosition(clawClosedPos);
-                Intake.clawState = ClawState.CLOSED;
-                break;
-            case CLOSED:
-                intake.get().setPosition(clawOpenPos);
-                Intake.clawState = ClawState.OPEN;
-                break;
-        }
-    }
-
+    //init hook
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
-        intakePivotRight.get().setDirection(Servo.Direction.REVERSE);
-        intake.get().setDirection(Servo.Direction.REVERSE);
     }
 
-    public Lambda setIntakePivot(IntakePivotState intakePivotState) {
-        return new Lambda("setIntakePivot")
-                .setInit(() -> setPivot(intakePivotState));
+    //start hook
+    @Override
+    public void preUserStartHook(@NonNull Wrapper opMode) {
     }
 
-    public Lambda setIntakePivotDependent() {
-        Intake.IntakePivotState intakePos;
-        if (Arm.armState == HOME) {
-            intakePos = IntakePivotState.HOME;
-        }
-        else if (Arm.armState == HIGH_SCORING) {
-            intakePos = IntakePivotState.INTAKE;
-        }
-        else {
-            intakePos = IntakePivotState.HOME;
-        }
-        return new Lambda("setIntakePivotDependent")
-                .setInit(() -> setIntakePivot(intakePos));
+
+    private void setIntakePivot(double target) {
+        intakePivot.get().setPosition(target);
     }
 
-    public Lambda setClawOpen(boolean open) {
-        return new Lambda("setClaw")
-                .setInit(() -> clawOpen(open));
+    private void setIntakePower(double power) {
+        intake.get().setPower(power);
     }
-
-    public Lambda setClawOpenAndClose() {
-        return new Lambda("setClawOpenAndClose")
-                .setInit(() -> clawOpenAndClose());
+    public Lambda setPivot(double target) {
+        return new Lambda("setPivot")
+                .setInit(() -> setIntakePivot(target));
     }
-
-    public Lambda setIntakeRotation(double position) {
-        return new Lambda("setIntakeRotation")
-                .setInit(() -> setRotation(position));
+    public Lambda setIntakePosition(IntakeState intakeState) {
+        return new Lambda("setIntakePosition")
+                .setInit(() -> setIntake(intakeState));
     }
-
+    public Lambda intake(double power) {
+        return new Lambda("intake")
+                .setInit(() -> setIntakePower(power));
+    }
 }
-*/

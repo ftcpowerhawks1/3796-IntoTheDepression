@@ -30,12 +30,11 @@ public class servoinit extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.a) {
             leftSide.setPosition(0);
             rightSide.setPosition(0);
-        } else if (gamepad1.b){
+
             leftSide.setPosition(0.6);
             rightSide.setPosition(0.6);
-        }
+
     }
 }
