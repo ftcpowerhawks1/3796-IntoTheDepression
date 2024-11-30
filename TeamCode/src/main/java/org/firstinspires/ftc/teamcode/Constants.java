@@ -43,6 +43,13 @@ public class Constants {
         public static final double rotation0Pos = 0.5;
         public static final double rotation90Pos = 0.83;
     }
+    public static final class OutakeConst {
+        public static final String outtakePivotLeft = "outtakePivotLeft";
+        public static final String outtakePivotRight = "outtakePivotRight";
+        //ADD IN SERVO POSITIONS AFTER TESTING
+        public static final double scoringPos = 0.0;
+        public static final double homePos = 0.0;
+    }
 
 
 
