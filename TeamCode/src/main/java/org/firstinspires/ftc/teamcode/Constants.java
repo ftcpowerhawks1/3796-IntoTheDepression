@@ -43,6 +43,13 @@ public class Constants {
 
 
     }
+    public static final class Outtake {
+        public static final String outtakePivotLeft = "outtakePivotLeft";
+        public static final String outtakePivotRight = "outtakePivotRight";
+        //ADD IN SERVO POSITIONS AFTER TESTING
+        public static final double inPos = 0.0;
+        public static final double outPos = 0.0;
+    }
 
 
 
