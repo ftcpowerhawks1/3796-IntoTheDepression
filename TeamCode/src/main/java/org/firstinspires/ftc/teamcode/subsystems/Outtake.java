@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Constants.OuttakeConst;
+import org.firstinspires.ftc.teamcode.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -49,8 +49,8 @@ public class Outtake extends SDKSubsystem {
     public static OuttakePivotState outtakePivotState;
 
     //Hardware
-    private final Cell<CachingServo> outtakePivotLeft = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OuttakeConst.outtakePivotLeft)));
-    private final Cell<CachingServo> outtakePivotRight = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, OuttakeConst.outtakePivotRight)));
+    private final Cell<CachingServo> outtakePivotLeft = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Outtake.outtakePivotLeft)));
+    private final Cell<CachingServo> outtakePivotRight = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Outtake.outtakePivotRight)));
 
     public void setPivotPosition(double position) {
         outtakePivotLeft.get().setPosition(position);
@@ -59,15 +59,14 @@ public class Outtake extends SDKSubsystem {
     public double getPivotPosition() {
         return outtakePivotLeft.get().getPosition();
     }
+
     public void setPivot(OuttakePivotState outtakePivotState){
         switch (outtakePivotState) {
             case OUT:
-                outtakePivotRight.get().setPosition(OuttakeConst.scoringPos);
-                outtakePivotLeft.get().setPosition(OuttakeConst.scoringPos);
+                setPivotPosition(Constants.Outtake.outPos);
                 break;
             case IN:
-                outtakePivotRight.get().setPosition(OuttakeConst.homePos);
-                outtakePivotLeft.get().setPosition(OuttakeConst.homePos);
+                setPivotPosition(Constants.Outtake.inPos);
                 break;
 
         }
