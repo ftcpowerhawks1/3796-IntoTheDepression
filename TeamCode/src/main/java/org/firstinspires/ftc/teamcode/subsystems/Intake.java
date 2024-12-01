@@ -74,8 +74,8 @@ public class Intake extends SDKSubsystem {
     public static IntakeState intakeState;
 
     //motors
-    private final Cell<CachingCRServo> intake = subsystemCell(() -> new CachingCRServo(getHardwareMap().get(CRServo.class, Constants.Intake.intakePivot)));
-    private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intake)));
+    private final Cell<CachingCRServo> intake = subsystemCell(() -> new CachingCRServo(getHardwareMap().get(CRServo.class, Constants.Intake.intake)));
+    private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
 
     public void setIntake(IntakeState Intakestate) {
         switch (intakeState) {
