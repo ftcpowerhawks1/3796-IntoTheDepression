@@ -48,7 +48,7 @@ public class Constants {
         public static final String outtakePivotRight = "RightOuttakeServo";
         //ADD IN SERVO POSITIONS AFTER TESTING
         public static final double inPos = 0.0;
-        public static final double outPos = 0.0;
+        public static final double outPos = 0.4;
     }
 
 

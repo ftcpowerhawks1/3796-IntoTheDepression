@@ -77,4 +77,8 @@ public class Outtake extends SDKSubsystem {
         return new Lambda("setOuttakePivot")
                 .setInit(() -> setPivot(outtakePivotState));
     }
+    public Lambda setOuttakePivotDirect(double position) {
+        return new Lambda("setOuttakePivotDirect")
+                .setInit(() -> setPivotPosition(position));
+    }
 }
