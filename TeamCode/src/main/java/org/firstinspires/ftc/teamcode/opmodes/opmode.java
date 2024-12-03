@@ -37,6 +37,9 @@ public class opmode extends OpMode {
 
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
 
+        Mercurial.gamepad1().x().onTrue(Intake.INSTANCE.intake(1.0));
+        Mercurial.gamepad1().b().onTrue(Intake.INSTANCE.intake(-1.0));
+
 
     }
     @Override
