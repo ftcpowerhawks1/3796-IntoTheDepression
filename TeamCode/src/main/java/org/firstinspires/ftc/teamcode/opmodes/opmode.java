@@ -53,5 +53,17 @@ public class opmode extends OpMode {
             gamepad2.rumble(200);
         }
 
+        if (VerticalSlides.INSTANCE.getCurrent()>= Constants.Slides.VERTICALCURRENTLIMIT) {
+            VerticalSlides.INSTANCE.setSlides(VerticalSlides.SlideState.HOME);
+            gamepad1.rumble(1000);
+            gamepad2.rumble(1000);
+        }
+
+        if (HorizontalSlides.INSTANCE.getCurrent()>= Constants.Slides.HORIZONTALCURRENTLIMIT) {
+            HorizontalSlides.INSTANCE.setSlides(HorizontalSlides.SlideState.HOME);
+            gamepad1.rumble(1000);
+            gamepad2.rumble(1000);
+        }
+
     }
 }

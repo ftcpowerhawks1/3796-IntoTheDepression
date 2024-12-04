@@ -20,6 +20,9 @@ public class Constants {
         public static final String VERTICALLEFT = "Verticalleft";
         public static final String VERTICALRIGHT = "Verticalright";
 
+        public static final double VERTICALCURRENTLIMIT = 8.2;
+
+        public static final double HORIZONTALCURRENTLIMIT = 8.2;
 
         public static final double fullIntakeExtend = -1500;
         public static final double halfIntakeExtend = -750;
