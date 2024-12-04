@@ -26,7 +26,7 @@ public class opmode extends OpMode {
     public void init() {
         color = hardwareMap.get(ColorSensor.class, "color");
 
-        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
+        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
         Mercurial.gamepad2().a()
                 .onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND));
 
@@ -45,10 +45,10 @@ public class opmode extends OpMode {
     @Override
     public void loop() {
         if (Mercurial.gamepad1().rightBumper().onTrue()) {
-            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(true));
+            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(true,false));
         }
         if (Mercurial.gamepad1().rightBumper().onFalse()) {
-            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
+            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
         }
 
         if (color.red() >= 100 || color.blue()>=100) {
