@@ -21,6 +21,8 @@ public class Constants {
         public static final String VERTICALRIGHT = "Verticalright";
 
         public static final double VERTICALCURRENTLIMIT = 8.2;
+        public static final double VERTICALVELOCITYMIN = 1;
+        public static final double HORIZONTALVELOCITYMIN = 1;
 
         public static final double HORIZONTALCURRENTLIMIT = 8.2;
 
