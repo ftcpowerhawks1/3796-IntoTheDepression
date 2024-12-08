@@ -18,8 +18,9 @@ import dev.frozenmilk.mercurial.Mercurial;
 @HorizontalSlides.Attach
 @VerticalSlides.Attach
 @Drive.Attach
+@Outtake.Attach
 @Intake.Attach
-@TeleOp(name = "PICK ME <------ PLS??")
+@TeleOp(name = "PICK ME <------ PLS???")
 public class finalOPMODE extends OpMode {
     ColorSensor color;
 
@@ -27,7 +28,7 @@ public class finalOPMODE extends OpMode {
     public void init() {
         color = hardwareMap.get(ColorSensor.class, "color");
 
-        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
+        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,true));
 
         // NICKS CONTROLS
 
@@ -44,12 +45,12 @@ public class finalOPMODE extends OpMode {
         Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.HOME));
 
         //Vertical Slides
-        Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HIGH_SCORING));
-        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
+        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HIGH_SCORING));
+        Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
 
         //Intake Spinner
-        Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.1).bind().onTrue(Intake.INSTANCE.intake(-1.0));
-        Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.1).bind().onTrue(Intake.INSTANCE.intake(1.0));
+        Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(-1.0));
+        Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
     }
     @Override
     public void loop() {
