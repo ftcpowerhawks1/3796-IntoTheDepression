@@ -26,7 +26,7 @@ public class opmode extends OpMode {
     public void init() {
         color = hardwareMap.get(ColorSensor.class, "color");
 
-        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
+        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
         Mercurial.gamepad2().a()
                 .onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND));
 
@@ -37,20 +37,35 @@ public class opmode extends OpMode {
 
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
 
+        Mercurial.gamepad1().x().onTrue(Intake.INSTANCE.intake(1.0));
+        Mercurial.gamepad1().b().onTrue(Intake.INSTANCE.intake(-1.0));
+
 
     }
     @Override
     public void loop() {
         if (Mercurial.gamepad1().rightBumper().onTrue()) {
-            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(true));
+            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(true,false));
         }
         if (Mercurial.gamepad1().rightBumper().onFalse()) {
-            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
+            Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
         }
 
         if (color.red() >= 100 || color.blue()>=100) {
             gamepad1.rumble(200);
             gamepad2.rumble(200);
+        }
+
+        if (VerticalSlides.INSTANCE.getCurrent()>= Constants.Slides.VERTICALCURRENTLIMIT && VerticalSlides.INSTANCE.getVelocity() <= Constants.Slides.VERTICALVELOCITYMIN) {
+            VerticalSlides.INSTANCE.setSlides(VerticalSlides.SlideState.HOME);
+            gamepad1.rumble(1000);
+            gamepad2.rumble(1000);
+        }
+
+        if (HorizontalSlides.INSTANCE.getCurrent()>= Constants.Slides.HORIZONTALCURRENTLIMIT && HorizontalSlides.INSTANCE.getVelocity() <= Constants.Slides.HORIZONTALVELOCITYMIN) {
+            HorizontalSlides.INSTANCE.setSlides(HorizontalSlides.SlideState.HOME);
+            gamepad1.rumble(1000);
+            gamepad2.rumble(1000);
         }
 
     }
