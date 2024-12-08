@@ -41,7 +41,7 @@ public class Constants {
         public static final String intakePivot = "intakePivot";
         public static final String intake = "intake";
         public static final double intakePos = 0;
-        public static final double depositPos = 0.3;
+        public static final double depositPos = 0.5;
         public static final double intakePower = 1;
         public static final double outtakePower = -1;
 

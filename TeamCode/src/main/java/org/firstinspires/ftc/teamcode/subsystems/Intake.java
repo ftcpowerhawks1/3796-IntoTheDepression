@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.teamcode.Constants.Intake.depositPos;
 import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePos;
+import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePower;
+import static org.firstinspires.ftc.teamcode.Constants.Intake.outtakePower;
 import static org.firstinspires.ftc.teamcode.Constants.Slides.highScoringPos;
 import static org.firstinspires.ftc.teamcode.Constants.Slides.homePos;
 import static org.firstinspires.ftc.teamcode.Constants.Slides.midScoringPos;
@@ -78,12 +80,16 @@ public class Intake extends SDKSubsystem {
     private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
 
     public void setIntake(IntakeState Intakestate) {
+        Intake.intakeState = Intakestate;
         switch (intakeState) {
             case INTAKING:
                 setIntakePivot(intakePos);
+                setIntakePower(intakePower);
                 break;
             case OUTTAKING:
                 setIntakePivot(depositPos);
+                setIntakePower(outtakePower);
+
                 break;
             case EXTENDED:
                 setIntakePivot(intakePos);
@@ -92,7 +98,6 @@ public class Intake extends SDKSubsystem {
                 setIntakePivot(depositPos);
                 break;
         }
-        Intake.intakeState = Intakestate;
     }
 
 
@@ -100,6 +105,7 @@ public class Intake extends SDKSubsystem {
     //init hook
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
+        setIntake(IntakeState.RETRACTED);
     }
 
     //start hook

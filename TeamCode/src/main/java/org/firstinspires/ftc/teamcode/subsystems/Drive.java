@@ -100,47 +100,44 @@ public class Drive extends SDKSubsystem {
                     rotX *= 1.1;
 
                     if (normalizeVelocities) {
-                        double denominator3 = Math.max(Math.abs(nrotY) + Math.abs(nrotX) + Math.abs(normalizedVelocities[2]), 1);
-                        double frontLeftPowerFieldNormalized = (nrotY + nrotX + normalizedVelocities[2]) / denominator3;
-                        double backLeftPowerFieldNormalized = (nrotY - nrotX + normalizedVelocities[2]) / denominator3;
-                        double frontRightPowerFieldNormalized = (nrotY - nrotX - normalizedVelocities[2]) / denominator3;
-                        double backRightPowerFieldNormalized = (nrotY + nrotX - normalizedVelocities[2]) / denominator3;
-
-                        double denominator4 = Math.max(Math.abs(normalizedVelocities[0]) + Math.abs(normalizedVelocities[1]) + Math.abs(normalizedVelocities[2]), 1);
-                        double frontLeftPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
-                        double backLeftPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
-                        double frontRightPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
-                        double backRightPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
                         if (isFieldCentric) {
+                            double denominator3 = Math.max(Math.abs(nrotY) + Math.abs(nrotX) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerFieldNormalized = (nrotY + nrotX + normalizedVelocities[2]) / denominator3;
+                            double backLeftPowerFieldNormalized = (nrotY - nrotX + normalizedVelocities[2]) / denominator3;
+                            double frontRightPowerFieldNormalized = (nrotY - nrotX - normalizedVelocities[2]) / denominator3;
+                            double backRightPowerFieldNormalized = (nrotY + nrotX - normalizedVelocities[2]) / denominator3;
                             leftFront.get().setPower(frontLeftPowerFieldNormalized);
                             leftBack.get().setPower(backLeftPowerFieldNormalized);
                             rightFront.get().setPower(frontRightPowerFieldNormalized);
                             rightBack.get().setPower(backRightPowerFieldNormalized);
                         } else {
+                            double denominator4 = Math.max(Math.abs(normalizedVelocities[0]) + Math.abs(normalizedVelocities[1]) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double backLeftPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double frontRightPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
+                            double backRightPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
                             leftFront.get().setPower(frontLeftPowerNonFieldNormalized);
                             leftBack.get().setPower(backLeftPowerNonFieldNormalized);
                             rightFront.get().setPower(frontRightPowerNonFieldNormalized);
                             rightBack.get().setPower(backRightPowerNonFieldNormalized);
                         }
                     } else {
-                        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                        double frontLeftPowerFieldOriented = (rotY + rotX + rx) / denominator;
-                        double backLeftPowerFieldOriented = (rotY - rotX + rx) / denominator;
-                        double frontRightPowerFieldOriented = (rotY - rotX - rx) / denominator;
-                        double backRightPowerFieldOriented = (rotY + rotX - rx) / denominator;
-
-                        double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-                        double frontLeftPowerNonField = (y + x + rx) / denominator2;
-                        double backLeftPowerNonField = (y - x + rx) / denominator2;
-                        double frontRightPowerNonField = (y - x - rx) / denominator2;
-                        double backRightPowerNonField = (y + x - rx) / denominator2;
-
                         if (isFieldCentric) {
+                            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+                            double frontLeftPowerFieldOriented = (rotY + rotX + rx) / denominator;
+                            double backLeftPowerFieldOriented = (rotY - rotX + rx) / denominator;
+                            double frontRightPowerFieldOriented = (rotY - rotX - rx) / denominator;
+                            double backRightPowerFieldOriented = (rotY + rotX - rx) / denominator;
                             leftFront.get().setPower(frontLeftPowerFieldOriented / 3);
                             leftBack.get().setPower(backLeftPowerFieldOriented / 3);
                             rightFront.get().setPower(frontRightPowerFieldOriented / 3);
                             rightBack.get().setPower(backRightPowerFieldOriented / 3);
                         } else {
+                            double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                            double frontLeftPowerNonField = (y + x + rx) / denominator2;
+                            double backLeftPowerNonField = (y - x + rx) / denominator2;
+                            double frontRightPowerNonField = (y - x - rx) / denominator2;
+                            double backRightPowerNonField = (y + x - rx) / denominator2;
                             leftFront.get().setPower(frontLeftPowerNonField / 3);
                             leftBack.get().setPower(backLeftPowerNonField / 3);
                             rightFront.get().setPower(frontRightPowerNonField / 3);
@@ -182,47 +179,44 @@ public class Drive extends SDKSubsystem {
                     rotX *= 1.1;
 
                     if (normalizeVelocities) {
-                        double denominator3 = Math.max(Math.abs(nrotY) + Math.abs(nrotX) + Math.abs(normalizedVelocities[2]), 1);
-                        double frontLeftPowerFieldNormalized = (nrotY + nrotX + normalizedVelocities[2]) / denominator3;
-                        double backLeftPowerFieldNormalized = (nrotY - nrotX + normalizedVelocities[2]) / denominator3;
-                        double frontRightPowerFieldNormalized = (nrotY - nrotX - normalizedVelocities[2]) / denominator3;
-                        double backRightPowerFieldNormalized = (nrotY + nrotX - normalizedVelocities[2]) / denominator3;
-
-                        double denominator4 = Math.max(Math.abs(normalizedVelocities[0]) + Math.abs(normalizedVelocities[1]) + Math.abs(normalizedVelocities[2]), 1);
-                        double frontLeftPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
-                        double backLeftPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
-                        double frontRightPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
-                        double backRightPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
                         if (isFieldCentric) {
+                            double denominator3 = Math.max(Math.abs(nrotY) + Math.abs(nrotX) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerFieldNormalized = (nrotY + nrotX + normalizedVelocities[2]) / denominator3;
+                            double backLeftPowerFieldNormalized = (nrotY - nrotX + normalizedVelocities[2]) / denominator3;
+                            double frontRightPowerFieldNormalized = (nrotY - nrotX - normalizedVelocities[2]) / denominator3;
+                            double backRightPowerFieldNormalized = (nrotY + nrotX - normalizedVelocities[2]) / denominator3;
                             leftFront.get().setPower(frontLeftPowerFieldNormalized/3);
                             leftBack.get().setPower(backLeftPowerFieldNormalized/3);
                             rightFront.get().setPower(frontRightPowerFieldNormalized/3);
                             rightBack.get().setPower(backRightPowerFieldNormalized/3);
                         } else {
+                            double denominator4 = Math.max(Math.abs(normalizedVelocities[0]) + Math.abs(normalizedVelocities[1]) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double backLeftPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double frontRightPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
+                            double backRightPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
                             leftFront.get().setPower(frontLeftPowerNonFieldNormalized/3);
                             leftBack.get().setPower(backLeftPowerNonFieldNormalized/3);
                             rightFront.get().setPower(frontRightPowerNonFieldNormalized/3);
                             rightBack.get().setPower(backRightPowerNonFieldNormalized/3);
                         }
                     } else {
-                        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-                        double frontLeftPowerFieldOriented = (rotY + rotX + rx) / denominator;
-                        double backLeftPowerFieldOriented = (rotY - rotX + rx) / denominator;
-                        double frontRightPowerFieldOriented = (rotY - rotX - rx) / denominator;
-                        double backRightPowerFieldOriented = (rotY + rotX - rx) / denominator;
-
-                        double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-                        double frontLeftPowerNonField = (y + x + rx) / denominator2;
-                        double backLeftPowerNonField = (y - x + rx) / denominator2;
-                        double frontRightPowerNonField = (y - x - rx) / denominator2;
-                        double backRightPowerNonField = (y + x - rx) / denominator2;
-
                         if (isFieldCentric) {
+                            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+                            double frontLeftPowerFieldOriented = (rotY + rotX + rx) / denominator;
+                            double backLeftPowerFieldOriented = (rotY - rotX + rx) / denominator;
+                            double frontRightPowerFieldOriented = (rotY - rotX - rx) / denominator;
+                            double backRightPowerFieldOriented = (rotY + rotX - rx) / denominator;
                             leftFront.get().setPower(frontLeftPowerFieldOriented / 3);
                             leftBack.get().setPower(backLeftPowerFieldOriented / 3);
                             rightFront.get().setPower(frontRightPowerFieldOriented / 3);
                             rightBack.get().setPower(backRightPowerFieldOriented / 3);
                         } else {
+                            double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                            double frontLeftPowerNonField = (y + x + rx) / denominator2;
+                            double backLeftPowerNonField = (y - x + rx) / denominator2;
+                            double frontRightPowerNonField = (y - x - rx) / denominator2;
+                            double backRightPowerNonField = (y + x - rx) / denominator2;
                             leftFront.get().setPower(frontLeftPowerNonField / 3);
                             leftBack.get().setPower(backLeftPowerNonField / 3);
                             rightFront.get().setPower(frontRightPowerNonField / 3);
