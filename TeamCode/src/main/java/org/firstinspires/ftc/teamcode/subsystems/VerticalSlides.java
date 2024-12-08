@@ -72,9 +72,9 @@ public class VerticalSlides extends SDKSubsystem {
     private final Cell<DcMotorEx> leftslides = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Slides.VERTICALLEFT));
 
     //encoder
-    private final Cell<EnhancedDoubleSupplier> encoder = subsystemCell(() -> new EnhancedDoubleSupplier(() -> (double) rightslides.get().getCurrentPosition()));
+    private final Cell<EnhancedDoubleSupplier> encoder = subsystemCell(() -> new EnhancedDoubleSupplier(() -> (double) leftslides.get().getCurrentPosition()));
     //current of motor
-    private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> rightslides.get().getCurrent(CurrentUnit.AMPS)));
+    private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> leftslides.get().getCurrent(CurrentUnit.AMPS)));
 
     //controller
     private double targetPos = 0.0;
