@@ -7,5 +7,5 @@ public class VerticalSlidesPIDConfig {
     //PID Values
     public static double SlidesP = 0.007;
     public static double SlidesI = 0;
-    public static double SlidesD = 0.0002;
+    public static double SlidesD = 0.0000;
 }

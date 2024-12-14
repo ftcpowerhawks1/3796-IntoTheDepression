@@ -83,11 +83,11 @@ public class Drive extends SDKSubsystem {
 
                     double[] normalizedVelocities = normalizeVelocities(y,x,rx);
 
-                    if (gamepad1.a().onTrue()) {
+                    if (gamepad1.options().onTrue()) {
                         imu.get().resetYaw();
                     }
 
-                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(Constants.Drive.imuOffsetDegrees);
 
                     double cosHeading = Math.cos(-botHeading);
                     double sinheading = Math.sin(-botHeading);
@@ -163,7 +163,7 @@ public class Drive extends SDKSubsystem {
                         imu.get().resetYaw();
                     }
 
-                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(Constants.Drive.imuOffsetDegrees);
 
                     // Rotate the movement direction counter to the bot's rotation
 

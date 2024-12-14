@@ -7,6 +7,8 @@ public class Constants {
         public static final String leftBack = "lb";
         public static final String rightFront = "rf";
         public static final String rightBack = "rb";
+
+        public static final double imuOffsetDegrees = 90;
     }
 
 

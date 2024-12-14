@@ -20,8 +20,8 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Drive.Attach
 @Outtake.Attach
 @Intake.Attach
-@TeleOp(name = "PICK ME <------ PLS???")
-public class finalOPMODE extends OpMode {
+@TeleOp(name = "Teleop", group = "Teleop")
+public class opMode extends OpMode {
     ColorSensor color;
 
     @Override
@@ -49,6 +49,7 @@ public class finalOPMODE extends OpMode {
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
 
         //Intake Spinner
+
         Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(-1.0));
         Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
     }
@@ -61,10 +62,15 @@ public class finalOPMODE extends OpMode {
             Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
         }
 
+        if (!(Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().state() || Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().state())) {
+            Intake.INSTANCE.intake(0);
+        }
+
         if (color.red() >= 100 || color.blue()>=100) {
             gamepad1.rumble(200);
             gamepad2.rumble(200);
         }
+        telemetry.addData("Color: ", color.red() + " " + color.green() +" " + color.blue());
 
     }
 }
