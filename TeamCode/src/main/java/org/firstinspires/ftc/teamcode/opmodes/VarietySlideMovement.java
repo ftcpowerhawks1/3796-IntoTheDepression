@@ -11,7 +11,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Mercurial.Attach
 @Outtake.Attach
 @VerticalSlides.Attach
-@TeleOp(name = "OuttakeServoPositions")
+@TeleOp(name = "VerticalSlidePositions")
 public class VarietySlideMovement extends OpMode {
 
     @Override
