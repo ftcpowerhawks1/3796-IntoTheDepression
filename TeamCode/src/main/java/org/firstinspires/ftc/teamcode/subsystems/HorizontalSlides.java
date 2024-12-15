@@ -65,7 +65,6 @@ public class HorizontalSlides extends SDKSubsystem {
 
     //motors
     private final Cell<DcMotorEx> rightslides = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Slides.HORIZONTALRIGHT));
-    private final Cell<DcMotorEx> leftslides = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Slides.HORIZONTALLEFT));
 
     //encoder
     private final Cell<EnhancedDoubleSupplier> encoder = subsystemCell(() -> new EnhancedDoubleSupplier(() -> (double) rightslides.get().getCurrentPosition()));
@@ -102,7 +101,6 @@ public class HorizontalSlides extends SDKSubsystem {
                     toleranceSupplier,
                     (Double power) -> {
                         rightslides.get().setPower(power);
-                        leftslides.get().setPower(power);
                     },
                     new DoubleComponent.P(MotionComponents.STATE, () -> SlidesP)
                             .plus(new DoubleComponent.I(MotionComponents.STATE, () -> SlidesI))
@@ -121,12 +119,10 @@ public class HorizontalSlides extends SDKSubsystem {
     public void retract() {
         controller.get().setEnabled(false);
         rightslides.get().setPower(-1);
-        leftslides.get().setPower(-1);
     }
 
     public void stopSlides() {
         rightslides.get().setPower(0);
-        leftslides.get().setPower(0);
         setTarget(0);
     }
 
@@ -173,8 +169,6 @@ public class HorizontalSlides extends SDKSubsystem {
     //init hook
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
-        leftslides.get().setDirection(DcMotorSimple.Direction.REVERSE);
-        leftslides.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightslides.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         controller.get().setEnabled(false);
