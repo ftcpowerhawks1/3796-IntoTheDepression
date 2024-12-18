@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import android.widget.HorizontalScrollView;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -38,8 +40,8 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.HOME));
 
         //Vertical Slides
-        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HIGH_SCORING));
-        Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
+        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-5000));
+        Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
         //Intake Spinner
         Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(-1.0));
@@ -75,6 +77,26 @@ public class opMode extends talonsOpMode {
         telemetry.addData("Color: ", color.red() + " " + color.green() +" " + color.blue());
 
         telemetry.addData("IMU: ", Drive.INSTANCE.getIMU());
+
+        telemetry.addData("Vertical Target Position: ", VerticalSlides.INSTANCE.getVerticalTargetPos());
+        telemetry.addData("Vertical Actual Position: ", VerticalSlides.INSTANCE.getEncoder());
+        telemetry.addData("Vertical Velocity: ", VerticalSlides.INSTANCE.getVelocity());
+        telemetry.addData("Vertical Controller Finished: ", VerticalSlides.INSTANCE.getControllerFinished());
+
+        telemetry.addData("Vertical Current Draw: ", VerticalSlides.INSTANCE.getCurrent());
+        telemetry.addData("Vertical Current Draw Change: ", VerticalSlides.INSTANCE.getCurrentChange());
+
+
+
+        telemetry.addData("Horizontal Target Position: ", HorizontalSlides.INSTANCE.getHorizontalTargetPos());
+        telemetry.addData("Horizontal Actual Position: ", HorizontalSlides.INSTANCE.getEncoder());
+        telemetry.addData("Horizontal Velocity: ", HorizontalSlides.INSTANCE.getVelocity());
+        telemetry.addData("Horizontal Controller Finished: ", HorizontalSlides.INSTANCE.getControllerFinished());
+
+        telemetry.addData("Horizontal Current Draw: ", HorizontalSlides.INSTANCE.getCurrent());
+        telemetry.addData("Horizontal Current Draw Change: ", HorizontalSlides.INSTANCE.getCurrentChange());
+
+
         telemetry.update();
 
     }

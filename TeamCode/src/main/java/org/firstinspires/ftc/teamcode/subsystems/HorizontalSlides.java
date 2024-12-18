@@ -161,6 +161,10 @@ public class HorizontalSlides extends SDKSubsystem {
         return (controller.get().finished());
     }
 
+    public double getHorizontalTargetPos() {
+        return targetPos;
+    }
+
     public void resetEncoder() {
         rightslides.get().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         targetSupplier.reset();

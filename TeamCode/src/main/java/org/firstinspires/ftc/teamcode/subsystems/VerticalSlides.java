@@ -153,7 +153,7 @@ public class VerticalSlides extends SDKSubsystem {
     }
 
     public double getVelocity() {
-        return (this.encoder.get().rawVelocity());
+        return (this.encoder.get().velocity());
     }
 
     public double getCurrent() {
@@ -161,7 +161,7 @@ public class VerticalSlides extends SDKSubsystem {
     }
 
     public double getCurrentChange() {
-        return (current.get().rawVelocity());
+        return (current.get().velocity());
     }
 
     public double getEncoder() {
@@ -170,6 +170,10 @@ public class VerticalSlides extends SDKSubsystem {
 
     public boolean getControllerFinished() {
         return (controller.get().finished());
+    }
+
+    public double getVerticalTargetPos() {
+        return targetPos;
     }
 
     public void resetEncoder() {
@@ -193,13 +197,14 @@ public class VerticalSlides extends SDKSubsystem {
         controller.get().setEnabled(true);
     }
 
-    public Lambda runToPosition(double target) {
+    public Lambda setSlidePosition(double target) {
         return new Lambda("run_to_position-vertical")
                 .setInit(() -> setTarget(target))
                 .setFinish(() -> controller.get().finished());
     }
     public Lambda setSlidePosition(SlideState slideState) {
         return new Lambda("setSlidePosition")
-                .setInit(() -> setSlides(slideState));
+                .setInit(() -> setSlides(slideState))
+                .setFinish(() -> controller.get().finished());
     }
 }
