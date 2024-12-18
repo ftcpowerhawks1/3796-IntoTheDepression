@@ -1,28 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.Constants.Intake.depositPos;
-import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePos;
-import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePower;
-import static org.firstinspires.ftc.teamcode.Constants.Intake.outtakePower;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.highScoringPos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.homePos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.midScoringPos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.specimenScoringPos;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesD;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesI;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesP;
+import static org.firstinspires.ftc.teamcode.util.Constants.Intake.depositPos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Intake.intakePos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Intake.intakePower;
+import static org.firstinspires.ftc.teamcode.util.Constants.Intake.outtakePower;
 
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.pid.DoubleComponent;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -34,10 +22,6 @@ import dev.frozenmilk.dairy.cachinghardware.CachingCRServo;
 import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
-import dev.frozenmilk.dairy.core.util.controller.implementation.DoubleController;
-import dev.frozenmilk.dairy.core.util.supplier.numeric.CachedMotionComponentSupplier;
-import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedDoubleSupplier;
-import dev.frozenmilk.dairy.core.util.supplier.numeric.MotionComponents;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;

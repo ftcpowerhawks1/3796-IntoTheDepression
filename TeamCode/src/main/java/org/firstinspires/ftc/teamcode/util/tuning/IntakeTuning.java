@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.util.tuning;
 
 import static dev.frozenmilk.dairy.pasteurized.Pasteurized.gamepad1;
 

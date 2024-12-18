@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -54,6 +54,10 @@ public class Drive extends SDKSubsystem {
     private final Cell<CachingDcMotor> rightFront = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.rightFront)));
     private final Cell<CachingDcMotor> rightBack = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.rightBack)));
 
+    private double workingOffset = Constants.Drive.imuOffsetDegrees;
+
+    private double botHeading = 0;
+
     // Retrieve the IMU from the hardware map
     final Cell<IMU> imu = subsystemCell(() -> getHardwareMap().get(IMU.class, "imu"));
     // Adjust the orientation parameters to match your robot
@@ -83,11 +87,7 @@ public class Drive extends SDKSubsystem {
 
                     double[] normalizedVelocities = normalizeVelocities(y,x,rx);
 
-                    if (gamepad1.options().onTrue()) {
-                        imu.get().resetYaw();
-                    }
-
-                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(Constants.Drive.imuOffsetDegrees);
+                    botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(workingOffset);
 
                     double cosHeading = Math.cos(-botHeading);
                     double sinheading = Math.sin(-botHeading);
@@ -159,11 +159,9 @@ public class Drive extends SDKSubsystem {
 
                     double[] normalizedVelocities = normalizeVelocities(y,x,rx);
 
-                    if (gamepad1.options().onTrue()) {
-                        imu.get().resetYaw();
-                    }
 
-                    double botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(Constants.Drive.imuOffsetDegrees);
+
+                    botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(Constants.Drive.imuOffsetDegrees);
 
                     // Rotate the movement direction counter to the bot's rotation
 
@@ -245,5 +243,26 @@ public class Drive extends SDKSubsystem {
     }
 
 
+    public double getIMU() {
+        return imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(workingOffset);
+    }
+
+    private void resetIMUOffset(double userInputedOffsetDegrees) {
+        workingOffset = userInputedOffsetDegrees;
+    }
+
+    private void resetIMUOffset() {
+        workingOffset = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + workingOffset;
+    }
+
+    public Lambda resetIMU() {
+        return new Lambda("resetIMU")
+                .setInit(this::resetIMUOffset);
+    }
+
+    public Lambda overrideIMUOffset(double offset) {
+        return new Lambda("overrideIMUOffset")
+                .setInit(() -> resetIMUOffset(offset));
+    }
 
 }

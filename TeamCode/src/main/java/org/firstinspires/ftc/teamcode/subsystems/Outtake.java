@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
 import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
+import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
@@ -43,8 +44,8 @@ public class Outtake extends SDKSubsystem {
     }
     //Declare states
     public enum OuttakePivotState {
-        OUT,
-        IN
+        UP,
+        DOWN
     }
     public static OuttakePivotState outtakePivotState;
 
@@ -62,11 +63,11 @@ public class Outtake extends SDKSubsystem {
 
     public void setPivot(OuttakePivotState outtakePivotState){
         switch (outtakePivotState) {
-            case OUT:
-                setPivotPosition(Constants.Outtake.outPos);
+            case UP:
+                setPivotPosition(Constants.Outtake.upPos);
                 break;
-            case IN:
-                setPivotPosition(Constants.Outtake.inPos);
+            case DOWN:
+                setPivotPosition(Constants.Outtake.downPos);
                 break;
 
         }
@@ -80,5 +81,10 @@ public class Outtake extends SDKSubsystem {
     public Lambda setOuttakePivotDirect(double position) {
         return new Lambda("setOuttakePivotDirect")
                 .setInit(() -> setPivotPosition(position));
+    }
+
+    @Override
+    public void preUserInitHook(@NonNull Wrapper opMode) {
+        setOuttakePivot(OuttakePivotState.DOWN);
     }
 }

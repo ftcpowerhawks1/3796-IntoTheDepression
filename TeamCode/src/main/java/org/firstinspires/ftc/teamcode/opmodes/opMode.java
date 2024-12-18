@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import static org.firstinspires.ftc.teamcode.Constants.Intake.intakePos;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -11,17 +8,13 @@ import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
+import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
 
-@Mercurial.Attach
-@HorizontalSlides.Attach
-@VerticalSlides.Attach
-@Drive.Attach
-@Outtake.Attach
-@Intake.Attach
+
 @TeleOp(name = "Teleop", group = "Teleop")
-public class opMode extends OpMode {
+public class opMode extends talonsOpMode {
     ColorSensor color;
 
     @Override
@@ -33,8 +26,8 @@ public class opMode extends OpMode {
         // NICKS CONTROLS
 
         //Bucket Pivots
-        Mercurial.gamepad2().leftBumper().onTrue(Outtake.INSTANCE.setOuttakePivot(Outtake.OuttakePivotState.IN));
-        Mercurial.gamepad2().rightBumper().onTrue(Outtake.INSTANCE.setOuttakePivot(Outtake.OuttakePivotState.OUT));
+        Mercurial.gamepad2().leftBumper().onTrue(Outtake.INSTANCE.setOuttakePivot(Outtake.OuttakePivotState.DOWN));
+        Mercurial.gamepad2().rightBumper().onTrue(Outtake.INSTANCE.setOuttakePivot(Outtake.OuttakePivotState.UP));
 
         //Intake Pivots
         Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.INTAKING));
@@ -49,9 +42,16 @@ public class opMode extends OpMode {
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.HOME));
 
         //Intake Spinner
-
         Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(-1.0));
         Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
+
+        //END NICKS CONTROLS
+
+
+        //JONATHAN'S CONTROLS
+        Mercurial.gamepad1().options().onTrue(Drive.INSTANCE.resetIMU());
+
+
     }
     @Override
     public void loop() {
@@ -70,7 +70,12 @@ public class opMode extends OpMode {
             gamepad1.rumble(200);
             gamepad2.rumble(200);
         }
+
+
         telemetry.addData("Color: ", color.red() + " " + color.green() +" " + color.blue());
+
+        telemetry.addData("IMU: ", Drive.INSTANCE.getIMU());
+        telemetry.update();
 
     }
 }

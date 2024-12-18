@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.Constants.Slides.highScoringPos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.homePos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.midScoringPos;
-import static org.firstinspires.ftc.teamcode.Constants.Slides.specimenScoringPos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Slides.highScoringPos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Slides.homePos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Slides.midScoringPos;
+import static org.firstinspires.ftc.teamcode.util.Constants.Slides.specimenScoringPos;
 import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesD;
 import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesI;
 import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesP;
@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.pid.DoubleComponent;
 
 import java.lang.annotation.ElementType;

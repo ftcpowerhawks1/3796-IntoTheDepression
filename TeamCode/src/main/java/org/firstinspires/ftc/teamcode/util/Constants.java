@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.util;
 
 
 public class Constants {
@@ -53,8 +53,8 @@ public class Constants {
     public static final class Outtake {
         public static final String outtakePivotLeft = "LeftOuttakeServo";
         public static final String outtakePivotRight = "RightOuttakeServo";
-        public static final double inPos = 0.0;
-        public static final double outPos = 0.4;
+        public static final double downPos = 0.0;
+        public static final double upPos = 0.4;
     }
 
 

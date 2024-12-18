@@ -1,4 +1,7 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.util.tuning;
+
+import static dev.frozenmilk.dairy.pasteurized.Pasteurized.gamepad1;
+import static dev.frozenmilk.mercurial.Mercurial.gamepad2;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -8,16 +11,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
-import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 
 import dev.frozenmilk.mercurial.Mercurial;
 
 @Mercurial.Attach
 @Drive.Attach
-@VerticalSlides.Attach
+@HorizontalSlides.Attach
 @Config
-@TeleOp(name="VerticalSlidesPIDTuning", group = "Tuning")
-public class VerticalSlidesPIDTuning extends OpMode {
+@TeleOp(name="HorizontalSlidesPIDTuning", group = "Tuning")
+public class HorizontalSlidesPIDTuning extends OpMode {
     public static double target = 0;
 
     @Override
@@ -30,9 +32,9 @@ public class VerticalSlidesPIDTuning extends OpMode {
 
     @Override
     public void loop() {
-        VerticalSlides.INSTANCE.setTarget(target);
+        HorizontalSlides.INSTANCE.setTarget(target);
         telemetry.addData("Target: ", target);
-        telemetry.addData("Position: ", VerticalSlides.INSTANCE.getEncoder());
+        telemetry.addData("Position: ", HorizontalSlides.INSTANCE.getEncoder());
         telemetry.update();
     }
 }

@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
+import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
 
@@ -22,7 +23,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Config
 @Disabled
 @TeleOp(name="cycling", group = "Tuning")
-public class cycling extends OpMode {
+public class cycling extends talonsOpMode {
     public static double target = 0;
     ColorSensor color;
 
