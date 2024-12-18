@@ -60,7 +60,7 @@ public class Intake extends SDKSubsystem {
     public static IntakeState intakeState;
 
     //motors
-    private final Cell<CachingCRServo> intake = subsystemCell(() -> new CachingCRServo(getHardwareMap().get(CRServo.class, Constants.Intake.intake)));
+    private final Cell<DcMotorEx> intake = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Intake.intake));
     private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
 
     public void setIntake(IntakeState Intakestate) {
@@ -68,11 +68,9 @@ public class Intake extends SDKSubsystem {
         switch (intakeState) {
             case INTAKING:
                 setIntakePivot(intakePos);
-                setIntakePower(intakePower);
                 break;
             case OUTTAKING:
                 setIntakePivot(depositPos);
-                setIntakePower(outtakePower);
 
                 break;
             case EXTENDED:
