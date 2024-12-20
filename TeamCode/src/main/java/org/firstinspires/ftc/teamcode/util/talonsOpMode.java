@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.subsystems.DefaultTelemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -16,6 +17,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Drive.Attach
 @Outtake.Attach
 @Intake.Attach
+@DefaultTelemetry.Attach
 public abstract class talonsOpMode extends OpMode {
 
 }

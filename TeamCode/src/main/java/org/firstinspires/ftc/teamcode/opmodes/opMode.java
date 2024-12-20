@@ -73,31 +73,5 @@ public class opMode extends talonsOpMode {
             gamepad2.rumble(200);
         }
 
-
-        telemetry.addData("Color: ", color.red() + " " + color.green() +" " + color.blue());
-
-        telemetry.addData("IMU: ", Drive.INSTANCE.getIMU());
-
-        telemetry.addData("Vertical Target Position: ", VerticalSlides.INSTANCE.getVerticalTargetPos());
-        telemetry.addData("Vertical Actual Position: ", VerticalSlides.INSTANCE.getEncoder());
-        telemetry.addData("Vertical Velocity: ", VerticalSlides.INSTANCE.getVelocity());
-        telemetry.addData("Vertical Controller Finished: ", VerticalSlides.INSTANCE.getControllerFinished());
-
-        telemetry.addData("Vertical Current Draw: ", VerticalSlides.INSTANCE.getCurrent());
-        telemetry.addData("Vertical Current Draw Change: ", VerticalSlides.INSTANCE.getCurrentChange());
-
-
-
-        telemetry.addData("Horizontal Target Position: ", HorizontalSlides.INSTANCE.getHorizontalTargetPos());
-        telemetry.addData("Horizontal Actual Position: ", HorizontalSlides.INSTANCE.getEncoder());
-        telemetry.addData("Horizontal Velocity: ", HorizontalSlides.INSTANCE.getVelocity());
-        telemetry.addData("Horizontal Controller Finished: ", HorizontalSlides.INSTANCE.getControllerFinished());
-
-        telemetry.addData("Horizontal Current Draw: ", HorizontalSlides.INSTANCE.getCurrent());
-        telemetry.addData("Horizontal Current Draw Change: ", HorizontalSlides.INSTANCE.getCurrentChange());
-
-
-        telemetry.update();
-
     }
 }

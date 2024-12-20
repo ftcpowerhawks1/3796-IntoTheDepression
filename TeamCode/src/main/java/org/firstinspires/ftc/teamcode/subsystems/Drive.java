@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import androidx.annotation.NonNull;
 
+import com.arcrobotics.ftclib.util.Timing;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.util.Constants;
@@ -15,6 +17,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 import dev.frozenmilk.dairy.cachinghardware.CachingDcMotor;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
@@ -54,6 +57,7 @@ public class Drive extends SDKSubsystem {
     private final Cell<CachingDcMotor> rightFront = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.rightFront)));
     private final Cell<CachingDcMotor> rightBack = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.rightBack)));
 
+    public ElapsedTime driverTimer = new ElapsedTime();
     private double workingOffset = Constants.Drive.imuOffsetDegrees;
 
     private double botHeading = 0;
@@ -224,6 +228,86 @@ public class Drive extends SDKSubsystem {
 
                 })
                 .setFinish(() -> false);
+    }
+
+
+    public Lambda timedDriveCommand(long time, double x, double y, double rx, boolean isFieldCentric, boolean normalizeVelocities) {
+        BoundGamepad gamepad1 = Mercurial.gamepad1();
+        return new Lambda("timed-mecanum-drive-robot-centric")
+                .setInit(() -> {
+                    this.driverTimer.reset();
+                })
+                .setExecute(() -> {
+
+
+                    double[] normalizedVelocities = normalizeVelocities(y,x,rx);
+
+                    botHeading = imu.get().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(workingOffset);
+
+                    double cosHeading = Math.cos(-botHeading);
+                    double sinheading = Math.sin(-botHeading);
+
+                    double rotX = x * cosHeading - y * sinheading;
+                    double rotY = x * cosHeading + y * sinheading;
+
+                    double nrotX = x * cosHeading - y * sinheading;
+                    double nrotY = x * cosHeading + y * sinheading;
+                    rotX *= 1.1;
+
+                    if (normalizeVelocities) {
+                        if (isFieldCentric) {
+                            double denominator3 = Math.max(Math.abs(nrotY) + Math.abs(nrotX) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerFieldNormalized = (nrotY + nrotX + normalizedVelocities[2]) / denominator3;
+                            double backLeftPowerFieldNormalized = (nrotY - nrotX + normalizedVelocities[2]) / denominator3;
+                            double frontRightPowerFieldNormalized = (nrotY - nrotX - normalizedVelocities[2]) / denominator3;
+                            double backRightPowerFieldNormalized = (nrotY + nrotX - normalizedVelocities[2]) / denominator3;
+                            leftFront.get().setPower(frontLeftPowerFieldNormalized);
+                            leftBack.get().setPower(backLeftPowerFieldNormalized);
+                            rightFront.get().setPower(frontRightPowerFieldNormalized);
+                            rightBack.get().setPower(backRightPowerFieldNormalized);
+                        } else {
+                            double denominator4 = Math.max(Math.abs(normalizedVelocities[0]) + Math.abs(normalizedVelocities[1]) + Math.abs(normalizedVelocities[2]), 1);
+                            double frontLeftPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double backLeftPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] + normalizedVelocities[2]) / denominator4;
+                            double frontRightPowerNonFieldNormalized = (normalizedVelocities[0] - normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
+                            double backRightPowerNonFieldNormalized = (normalizedVelocities[0] + normalizedVelocities[1] - normalizedVelocities[2]) / denominator4;
+                            leftFront.get().setPower(frontLeftPowerNonFieldNormalized);
+                            leftBack.get().setPower(backLeftPowerNonFieldNormalized);
+                            rightFront.get().setPower(frontRightPowerNonFieldNormalized);
+                            rightBack.get().setPower(backRightPowerNonFieldNormalized);
+                        }
+                    } else {
+                        if (isFieldCentric) {
+                            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+                            double frontLeftPowerFieldOriented = (rotY + rotX + rx) / denominator;
+                            double backLeftPowerFieldOriented = (rotY - rotX + rx) / denominator;
+                            double frontRightPowerFieldOriented = (rotY - rotX - rx) / denominator;
+                            double backRightPowerFieldOriented = (rotY + rotX - rx) / denominator;
+                            leftFront.get().setPower(frontLeftPowerFieldOriented / 3);
+                            leftBack.get().setPower(backLeftPowerFieldOriented / 3);
+                            rightFront.get().setPower(frontRightPowerFieldOriented / 3);
+                            rightBack.get().setPower(backRightPowerFieldOriented / 3);
+                        } else {
+                            double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                            double frontLeftPowerNonField = (y + x + rx) / denominator2;
+                            double backLeftPowerNonField = (y - x + rx) / denominator2;
+                            double frontRightPowerNonField = (y - x - rx) / denominator2;
+                            double backRightPowerNonField = (y + x - rx) / denominator2;
+                            leftFront.get().setPower(frontLeftPowerNonField / 3);
+                            leftBack.get().setPower(backLeftPowerNonField / 3);
+                            rightFront.get().setPower(frontRightPowerNonField / 3);
+                            rightBack.get().setPower(backRightPowerNonField / 3);
+                        }
+                    }
+                })
+                .setEnd((interrupted) -> {
+                    leftFront.get().setPower(0);
+                    leftBack.get().setPower(0);
+                    rightFront.get().setPower(0);
+                    rightBack.get().setPower(0);
+                })
+                .setFinish(() -> driverTimer.time(TimeUnit.MILLISECONDS) >= time );
+
     }
 
 
