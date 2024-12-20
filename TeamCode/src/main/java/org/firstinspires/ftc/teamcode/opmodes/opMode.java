@@ -32,12 +32,14 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().rightBumper().onTrue(Outtake.INSTANCE.setOuttakePivot(Outtake.OuttakePivotState.UP));
 
         //Intake Pivots
-        Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.INTAKING));
-        Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.OUTTAKING));
+        Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
+        Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED));
 
         //Horizontal Slides
         Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-1500));
         Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
+        Mercurial.gamepad2().dpadLeft().onTrue(HorizontalSlides.INSTANCE.runToPosition(-700).then(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.INTAKING).then(HorizontalSlides.INSTANCE.runToPosition(-1500))));
+        Mercurial.gamepad2().dpadRight().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(HorizontalSlides.INSTANCE.runToPosition(0).then(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.OUTTAKING))));
 
         //Vertical Slides
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-5000));

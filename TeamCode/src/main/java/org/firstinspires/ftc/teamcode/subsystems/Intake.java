@@ -69,10 +69,11 @@ public class Intake extends SDKSubsystem {
         switch (intakeState) {
             case INTAKING:
                 setIntakePivot(intakePos);
+                setIntakePower(intakePower);
                 break;
             case OUTTAKING:
                 setIntakePivot(depositPos);
-
+                setIntakePower(outtakePower);
                 break;
             case EXTENDED:
                 setIntakePivot(intakePos);
