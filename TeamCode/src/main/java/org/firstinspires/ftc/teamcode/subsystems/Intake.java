@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.teamcode.util.Constants.Intake.IntakeCurrentMax;
 import static org.firstinspires.ftc.teamcode.util.Constants.Intake.depositPos;
 import static org.firstinspires.ftc.teamcode.util.Constants.Intake.intakePos;
 import static org.firstinspires.ftc.teamcode.util.Constants.Intake.intakePower;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.annotation.ElementType;
@@ -23,6 +25,7 @@ import dev.frozenmilk.dairy.cachinghardware.CachingCRServo;
 import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
+import dev.frozenmilk.dairy.core.util.supplier.numeric.EnhancedDoubleSupplier;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
@@ -63,7 +66,7 @@ public class Intake extends SDKSubsystem {
     //motors
     private final Cell<DcMotorEx> intake = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Intake.intake));
     private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
-
+    private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> intake.get().getCurrent(CurrentUnit.MILLIAMPS)));
     public void setIntake(IntakeState Intakestate) {
         Intake.intakeState = Intakestate;
         switch (intakeState) {
@@ -97,6 +100,9 @@ public class Intake extends SDKSubsystem {
     public void preUserStartHook(@NonNull Wrapper opMode) {
     }
 
+    public Cell<EnhancedDoubleSupplier> getCurrentCell() {
+        return current;
+    }
 
     private void setIntakePivot(double target) {
         intakePivot.get().setPosition(target);
@@ -116,5 +122,11 @@ public class Intake extends SDKSubsystem {
     public Lambda intake(double power) {
         return new Lambda("intake")
                 .setInit(() -> setIntakePower(power));
+    }
+
+    public Lambda smartIntakeCommand(double power) {
+        return new Lambda("intake")
+                .setInit(() -> setIntakePower(power))
+                .setFinish(() -> current.get().velocity()>=IntakeCurrentMax);
     }
 }

@@ -45,6 +45,7 @@ public class Constants {
         public static final double depositPos = 0.5;
         public static final double intakePower = 1;
         public static final double outtakePower = -1;
+        public static final double IntakeCurrentMax = 1000;
 
 
 

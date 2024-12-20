@@ -1,13 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import androidx.annotation.NonNull;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -15,14 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import dev.frozenmilk.dairy.cachinghardware.CachingServo;
 import dev.frozenmilk.dairy.core.dependency.Dependency;
 import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
-import dev.frozenmilk.mercurial.commands.Lambda;
 import dev.frozenmilk.mercurial.subsystems.SDKSubsystem;
 import dev.frozenmilk.mercurial.subsystems.Subsystem;
-import dev.frozenmilk.util.cell.Cell;
 
 public class DefaultTelemetry extends SDKSubsystem {
     public static final DefaultTelemetry INSTANCE = new DefaultTelemetry();
@@ -70,6 +60,11 @@ public class DefaultTelemetry extends SDKSubsystem {
 
         opMode.getOpMode().telemetry.addData("Horizontal Current Draw: ", HorizontalSlides.INSTANCE.getCurrent());
         opMode.getOpMode().telemetry.addData("Horizontal Current Draw Change: ", HorizontalSlides.INSTANCE.getCurrentChange());
+
+        opMode.getOpMode().telemetry.addData("---------------------","------------------------");
+
+        opMode.getOpMode().telemetry.addData("Intake Current Draw: ", Intake.INSTANCE.getCurrentCell().get().state());
+        opMode.getOpMode().telemetry.addData("Intake Current Draw Change: ", Intake.INSTANCE.getCurrentCell().get().velocity());
 
 
         opMode.getOpMode().telemetry.update();
