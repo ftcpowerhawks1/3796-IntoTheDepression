@@ -36,8 +36,8 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.OUTTAKING));
 
         //Horizontal Slides
-        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND));
-        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.HOME));
+        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-1500));
+        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
 
         //Vertical Slides
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-5000));
