@@ -39,7 +39,6 @@ public class DefaultTelemetry extends SDKSubsystem {
     @Override
     public void preUserLoopHook(@NonNull Wrapper opMode) {
 
-        opMode.getOpMode().telemetry.addData("IMU: ", Drive.INSTANCE.getIMU());
 
         opMode.getOpMode().telemetry.addData("---------------------","------------------------");
 

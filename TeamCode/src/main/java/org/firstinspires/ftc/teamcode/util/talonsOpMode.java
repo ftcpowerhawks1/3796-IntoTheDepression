@@ -17,7 +17,6 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Drive.Attach
 @Outtake.Attach
 @Intake.Attach
-@DefaultTelemetry.Attach
 public abstract class talonsOpMode extends OpMode {
 
 }

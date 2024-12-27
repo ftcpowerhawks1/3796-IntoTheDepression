@@ -27,7 +27,7 @@ public class HorizontalSlidesPIDTuning extends OpMode {
         //just to make slides tuned in a similar environment to when everything is running
         //ignore everything in init
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
+        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
     }
 
     @Override

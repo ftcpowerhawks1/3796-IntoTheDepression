@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
@@ -19,6 +20,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Mercurial.Attach
 @Drive.Attach
 @HorizontalSlides.Attach
+@Intake.Attach
 @Config
 @Disabled
 @TeleOp(name="cycling", group = "Tuning")
@@ -31,7 +33,7 @@ public class cycling extends talonsOpMode {
         //just to make slides tuned in a similar environment to when everything is running
         //ignore everything in init
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true,false));
+        Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(true));
 
         color = hardwareMap.get(ColorSensor.class, "color");
     }

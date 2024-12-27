@@ -8,7 +8,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 
 @Mercurial.Attach
 @Outtake.Attach
-@TeleOp(name = "OuttakeServoPositions")
+@TeleOp(name = "VarietyServoTest")
 public class VarietyServoTest extends OpMode {
 
     @Override

@@ -76,6 +76,8 @@ public class HorizontalSlides extends SDKSubsystem {
     private double targetVel = 0.0;
     private double posTolerance = 50.0;
     private double velTolerance = 1.0;
+
+    private Wrapper baseOpMode;
     private final CachedMotionComponentSupplier<Double> targetSupplier = new CachedMotionComponentSupplier<>(motionComponent -> {
         if (motionComponent == MotionComponents.STATE) {
             return targetPos;
@@ -181,6 +183,8 @@ public class HorizontalSlides extends SDKSubsystem {
     //start hook
     @Override
     public void preUserStartHook(@NonNull Wrapper opMode) {
+
+
         controller.get().setEnabled(true);
     }
 
