@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import android.widget.HorizontalScrollView;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.outoftheboxrobotics.photoncore.Photon;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -17,11 +18,11 @@ import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 import java.util.concurrent.TimeUnit;
 
 import dev.frozenmilk.mercurial.Mercurial;
-
 @TeleOp(name = "Teleop", group = "Teleop")
+@Config
 public class opMode extends talonsOpMode {
-    ColorSensor color;
     public static double target = 0;
+    ColorSensor color;
     ElapsedTime deltaTime = new ElapsedTime();
     @Override
     public void init() {
@@ -39,13 +40,11 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
         Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(Intake.INSTANCE.intake(0)));
 
-        //Horizontal Slides
-        Mercurial.gamepad2().dpadLeft().onTrue(HorizontalSlides.INSTANCE.runToPosition(-700).then(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.INTAKING).then(HorizontalSlides.INSTANCE.runToPosition(-1500))));
-        Mercurial.gamepad2().dpadRight().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(HorizontalSlides.INSTANCE.runToPosition(0).then(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.OUTTAKING))));
-
         //Vertical Slides
-        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-5000));
+        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
         Mercurial.gamepad1().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-2500));
+        Mercurial.gamepad1().dpadLeft().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4500));
+        Mercurial.gamepad1().dpadRight().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
 
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
@@ -69,7 +68,7 @@ public class opMode extends talonsOpMode {
     }
     @Override
     public void loop() {
-
+        VerticalSlides.INSTANCE.setSlidePosition(target);
 
         if (Mercurial.gamepad1().rightBumper().onTrue()) {
             Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(false));
@@ -82,8 +81,14 @@ public class opMode extends talonsOpMode {
             Intake.INSTANCE.intake(0);
         }
 
+        if (VerticalSlides.INSTANCE.getCurrent()  >= 2){
+            VerticalSlides.INSTANCE.setSlidePosition(0);
+        }
+
 
         telemetry.addData("Time: ", deltaTime.time(TimeUnit.MILLISECONDS));
+        telemetry.addData("Current: ", VerticalSlides.INSTANCE.getCurrent());
+
         telemetry.update();
         deltaTime.reset();
 

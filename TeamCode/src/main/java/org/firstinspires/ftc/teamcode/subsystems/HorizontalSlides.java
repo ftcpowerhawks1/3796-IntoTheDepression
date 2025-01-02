@@ -44,6 +44,8 @@ public class HorizontalSlides extends SDKSubsystem {
 
     private Dependency<?> dependency = Subsystem.DEFAULT_DEPENDENCY.and(new SingleAnnotation<>(Attach.class));
 
+    private Wrapper opmodeWrapper;
+
     @NonNull
     @Override
     public Dependency<?> getDependency() {
@@ -176,7 +178,7 @@ public class HorizontalSlides extends SDKSubsystem {
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
         rightslides.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        opmodeWrapper = opMode;
         controller.get().setEnabled(false);
     }
 
@@ -191,10 +193,12 @@ public class HorizontalSlides extends SDKSubsystem {
     public Lambda runToPosition(double target) {
         return new Lambda("run_to_position-horizontal")
                 .setInit(() -> setTarget(target))
-                .setFinish(() -> controller.get().finished());
+                .setFinish(() -> controller.get().finished()|| opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
     }
     public Lambda setSlidePosition(SlideState slideState) {
         return new Lambda("setSlidePosition")
-                .setInit(() -> setSlides(slideState));
+                .setInit(() -> setSlides(slideState))
+                .setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
+
     }
 }

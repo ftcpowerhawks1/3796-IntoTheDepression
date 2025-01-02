@@ -46,7 +46,7 @@ public class VerticalSlides extends SDKSubsystem {
     public @interface Attach{}
 
     private Dependency<?> dependency = Subsystem.DEFAULT_DEPENDENCY.and(new SingleAnnotation<>(Attach.class));
-
+    private Wrapper opmodeWrapper;
     @NonNull
     @Override
     public Dependency<?> getDependency() {
@@ -187,7 +187,7 @@ public class VerticalSlides extends SDKSubsystem {
         leftslides.get().setDirection(DcMotorSimple.Direction.REVERSE);
         leftslides.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightslides.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        opmodeWrapper = opMode;
         controller.get().setEnabled(false);
     }
 
@@ -200,11 +200,11 @@ public class VerticalSlides extends SDKSubsystem {
     public Lambda setSlidePosition(double target) {
         return new Lambda("run_to_position-vertical")
                 .setInit(() -> setTarget(target))
-                .setFinish(() -> controller.get().finished());
+                .setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
     }
     public Lambda setSlidePosition(SlideState slideState) {
         return new Lambda("setSlidePosition")
                 .setInit(() -> setSlides(slideState))
-                .setFinish(() -> controller.get().finished());
+                .setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
     }
 }

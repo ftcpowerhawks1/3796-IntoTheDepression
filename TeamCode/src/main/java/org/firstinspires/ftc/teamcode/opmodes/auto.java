@@ -20,16 +20,49 @@ public class auto extends talonsOpMode {
         Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
-        TrajectoryActionBuilder specimin = drive.actionBuilder(initialPose)
+        Action sampleOne = drive.getDrive().actionBuilder(new Pose2d(-35, -61, Math.toRadians(270)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-9,-33),Math.toRadians(90));
-
-        Action sampleOne = specimin.endTrajectory().fresh()
+                .splineToConstantHeading(new Vector2d(-9,-33),Math.toRadians(90))
                 .setReversed(false)
+                //First Sample
                 .splineToSplineHeading(new Pose2d(-52,-48,Math.toRadians(135)),Math.toRadians(180))
                 .waitSeconds(1)
                 .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(90))
-                .build();
+
+                //Second Sample
+                .splineToLinearHeading(new Pose2d(-58,-43,Math.toRadians(90)),Math.toRadians(90))
+                .waitSeconds(1)
+
+                .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(90))
+
+                //Third Sample
+                .splineToLinearHeading(new Pose2d(-58,-43,Math.toRadians(60)),Math.toRadians(90))
+                .waitSeconds(1)
+                .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(90))
+
+
+                //Fourth Sample
+                .splineToLinearHeading(new Pose2d(-25,-10,Math.toRadians(0)),Math.toRadians(0))
+
+                .waitSeconds(1)
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(180))
+                .setReversed(false)
+
+
+                //Fith Sample
+                .splineToLinearHeading(new Pose2d(-25,-10,Math.toRadians(0)),Math.toRadians(0))
+
+                .waitSeconds(1)
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(180))
+                .setReversed(false)
+
+                //Sixth Sample
+                .splineToLinearHeading(new Pose2d(-25,-10,Math.toRadians(0)),Math.toRadians(0))
+                .waitSeconds(1)
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(-55,-55,Math.toRadians(45)),Math.toRadians(180))
 
 
     }
