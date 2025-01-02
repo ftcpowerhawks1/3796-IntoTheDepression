@@ -30,7 +30,7 @@ public class Constants {
         public static final double fullIntakeExtend = -1500;
         public static final double halfIntakeExtend = -750;
 
-        public static final double highScoringPos = -5000;
+        public static final double highScoringPos = -2500;
         public static final double midScoringPos = -2500;
         public static final double specimenScoringPos = 0.0;
         public static final double homePos = 0.0;
