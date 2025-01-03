@@ -93,6 +93,7 @@ public class Intake extends SDKSubsystem {
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
         setIntake(IntakeState.RETRACTED);
+        setIntakePower(0);
     }
 
     //start hook

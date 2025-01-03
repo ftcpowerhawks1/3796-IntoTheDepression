@@ -21,12 +21,9 @@ import dev.frozenmilk.mercurial.Mercurial;
 @TeleOp(name = "Teleop", group = "Teleop")
 @Config
 public class opMode extends talonsOpMode {
-    public static double target = 0;
-    ColorSensor color;
     ElapsedTime deltaTime = new ElapsedTime();
     @Override
     public void init() {
-        color = hardwareMap.get(ColorSensor.class, "color");
 
         Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(false));
 
@@ -42,9 +39,6 @@ public class opMode extends talonsOpMode {
 
         //Vertical Slides
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
-        Mercurial.gamepad1().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-2500));
-        Mercurial.gamepad1().dpadLeft().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4500));
-        Mercurial.gamepad1().dpadRight().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
 
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
@@ -57,32 +51,30 @@ public class opMode extends talonsOpMode {
 
         //Intake Spinner
         Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(-1.0));
-        Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
+        Mercurial.gamepad2().rightTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
 
         //END NICKS CONTROLS
 
-
         //JONATHAN'S CONTROLS
-
+        Mercurial.gamepad1().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-3800));
 
     }
     @Override
     public void loop() {
-        VerticalSlides.INSTANCE.setSlidePosition(target);
 
         if (Mercurial.gamepad1().rightBumper().onTrue()) {
             Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.slowDriveCommand(false));
         }
-        if (Mercurial.gamepad1().rightBumper().onFalse()) {
+        if (Mercurial.gamepad1().rightBumper().onFalse() && Drive.INSTANCE.getDefaultCommand() == Drive.INSTANCE.slowDriveCommand(false)) {
             Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(false));
         }
 
-        if (!(Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue() || Mercurial.gamepad2().rightTrigger().conditionalBindState().lessThan(0.05).bind().onTrue())) {
+        if ((!Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue() && !Mercurial.gamepad2().rightTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue())) {
             Intake.INSTANCE.intake(0);
         }
 
         if (VerticalSlides.INSTANCE.getCurrent()  >= 2){
-            VerticalSlides.INSTANCE.setSlidePosition(0);
+            VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.INSTANCE.getEncoder());
         }
 
 
