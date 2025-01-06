@@ -74,6 +74,10 @@ public class Outtake extends SDKSubsystem {
         Outtake.outtakePivotState = outtakePivotState;
     }
 
+    private void togglePivot() {
+        setPivot(outtakePivotState == OuttakePivotState.UP ? OuttakePivotState.DOWN : OuttakePivotState.UP);
+    }
+
     public Lambda setOuttakePivot(Outtake.OuttakePivotState outtakePivotState) {
         return new Lambda("setOuttakePivot")
                 .setInit(() -> setPivot(outtakePivotState));
@@ -81,6 +85,10 @@ public class Outtake extends SDKSubsystem {
     public Lambda setOuttakePivotDirect(double position) {
         return new Lambda("setOuttakePivotDirect")
                 .setInit(() -> setPivotPosition(position));
+    }
+    public Lambda toggleState() {
+        return new Lambda("setOuttakePivot")
+                .setInit(() -> togglePivot());
     }
 
     @Override
