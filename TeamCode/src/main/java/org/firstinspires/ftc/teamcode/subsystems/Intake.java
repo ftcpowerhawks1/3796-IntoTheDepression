@@ -66,7 +66,10 @@ public class Intake extends SDKSubsystem {
     //motors
     private final Cell<DcMotorEx> intake = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Intake.intake));
     private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
+
     private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> intake.get().getCurrent(CurrentUnit.MILLIAMPS)));
+
+
     public void setIntake(IntakeState Intakestate) {
         Intake.intakeState = Intakestate;
         switch (intakeState) {
