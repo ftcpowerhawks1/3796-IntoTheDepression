@@ -46,7 +46,6 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-2000));
         Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
 
-        Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
 
         //Intake Spinner
