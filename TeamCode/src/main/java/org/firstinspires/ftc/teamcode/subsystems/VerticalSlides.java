@@ -4,9 +4,9 @@ import static org.firstinspires.ftc.teamcode.util.Constants.Slides.highScoringPo
 import static org.firstinspires.ftc.teamcode.util.Constants.Slides.homePos;
 import static org.firstinspires.ftc.teamcode.util.Constants.Slides.midScoringPos;
 import static org.firstinspires.ftc.teamcode.util.Constants.Slides.specimenScoringPos;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesD;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesI;
-import static org.firstinspires.ftc.teamcode.config.HorizontalSlidesPIDConfig.SlidesP;
+import static org.firstinspires.ftc.teamcode.config.VerticalSlidesPIDConfig.SlidesD;
+import static org.firstinspires.ftc.teamcode.config.VerticalSlidesPIDConfig.SlidesI;
+import static org.firstinspires.ftc.teamcode.config.VerticalSlidesPIDConfig.SlidesP;
 
 import androidx.annotation.NonNull;
 
