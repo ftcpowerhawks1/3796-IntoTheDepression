@@ -76,7 +76,7 @@ public class HorizontalSlides extends SDKSubsystem {
     //controller
     private double targetPos = 0.0;
     private double targetVel = 0.0;
-    private double posTolerance = 25.0;
+    private double posTolerance = 5.0;
     private double velTolerance = 1.0;
 
     private Wrapper baseOpMode;
