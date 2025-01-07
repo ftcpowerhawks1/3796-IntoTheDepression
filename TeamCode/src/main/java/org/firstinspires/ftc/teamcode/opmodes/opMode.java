@@ -17,13 +17,22 @@ import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import java.util.concurrent.TimeUnit;
 
+import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
 import dev.frozenmilk.mercurial.Mercurial;
+import dev.frozenmilk.mercurial.bindings.BoundBooleanSupplier;
+
 @TeleOp(name = "Teleop", group = "Teleop")
 @Config
 public class opMode extends talonsOpMode {
     ElapsedTime deltaTime = new ElapsedTime();
+    private BoundBooleanSupplier cond1, cond2;
+
     @Override
     public void init() {
+        //conditions
+        cond1 = Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind();
+        cond2 = Mercurial.gamepad2().rightTrigger().conditionalBindState().greaterThan(0.05).bind();
+
 
         Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(false));
 
@@ -68,7 +77,7 @@ public class opMode extends talonsOpMode {
             Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(false));
         }
 
-        if ((!Mercurial.gamepad2().leftTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue() && !Mercurial.gamepad2().rightTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue())) {
+        if (!cond1.onTrue() && cond2.onTrue()) {
             Intake.INSTANCE.intake(0);
         }
 
