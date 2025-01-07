@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
@@ -10,12 +12,13 @@ import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
+import dev.frozenmilk.mercurial.bindings.BoundBooleanSupplier;
 
 @TeleOp(name = "Simple OpMode", group = "Teleop")
 public class simplifiedOpMode extends talonsOpMode {
-
     @Override
     public void init() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         //driving
         Drive.INSTANCE.setDefaultCommand(Drive.INSTANCE.driveCommand(false));
@@ -23,8 +26,6 @@ public class simplifiedOpMode extends talonsOpMode {
 
         //bucket controls
         Mercurial.gamepad2().rightBumper().onTrue(Outtake.INSTANCE.toggleState());
-        Mercurial.gamepad2().leftBumper().onTrue(Outtake.INSTANCE.toggleState());
-
 
         //intake controls
         Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
@@ -40,7 +41,8 @@ public class simplifiedOpMode extends talonsOpMode {
 
 
         //vertical slides
-        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
+        //Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4600));
+        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-2500));
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
     }
@@ -50,5 +52,8 @@ public class simplifiedOpMode extends talonsOpMode {
         if (VerticalSlides.INSTANCE.getCurrent()  >= 2){
             VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.INSTANCE.getEncoder());
         }
+        telemetry.addData("Target: ", VerticalSlides.INSTANCE.getVerticalTargetPos());
+        telemetry.addData("Position: ", VerticalSlides.INSTANCE.getEncoder());
+        telemetry.update();
     }
 }

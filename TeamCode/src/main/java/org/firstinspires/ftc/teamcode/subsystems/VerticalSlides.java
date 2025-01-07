@@ -200,7 +200,7 @@ public class VerticalSlides extends SDKSubsystem {
     public Lambda setSlidePosition(double target) {
         return new Lambda("run_to_position-vertical")
                 .setInit(() -> setTarget(target))
-                ;//.setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
+                .setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
     }
     public Lambda setSlidePosition(SlideState slideState) {
         return new Lambda("setSlidePosition")
