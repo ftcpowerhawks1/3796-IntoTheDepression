@@ -12,7 +12,9 @@ import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 import org.firstinspires.ftc.teamcode.util.MercurialAction;
+import org.firstinspires.ftc.teamcode.util.SilkRoad;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
+@SilkRoad.Attach
 @Autonomous(name = "Auto", preselectTeleOp = "Simple OpMode")
 public class auto extends talonsOpMode {
     Pose2d initialPose = new Pose2d(-35, -61,Math.toRadians(270));
@@ -77,7 +79,7 @@ public class auto extends talonsOpMode {
 
     @Override
     public void start() {
-        Actions.runBlocking(
+        SilkRoad.RunAsync(
                 mainAction
         );
     }
