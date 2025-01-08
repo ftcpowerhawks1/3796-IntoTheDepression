@@ -93,6 +93,8 @@ public class Outtake extends SDKSubsystem {
 
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
+        outtakePivotLeft.get();
+        outtakePivotRight.get();
         setOuttakePivot(OuttakePivotState.DOWN);
     }
 }
