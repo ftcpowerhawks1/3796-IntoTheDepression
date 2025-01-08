@@ -41,8 +41,8 @@ public class Intake extends SDKSubsystem {
     @Inherited
     public @interface Attach{}
 
+    //Dependency Setup
     private Dependency<?> dependency = Subsystem.DEFAULT_DEPENDENCY.and(new SingleAnnotation<>(Attach.class));
-
     @NonNull
     @Override
     public Dependency<?> getDependency() {
@@ -54,58 +54,72 @@ public class Intake extends SDKSubsystem {
         this.dependency = dependency;
     }
 
+    //Intake State Setup
     public enum IntakeState {
-        INTAKING,
-        OUTTAKING,
-        EXTENDED,
-        RETRACTED
+        INTAKING {
+            @Override
+            public void apply() {
+                Intake.INSTANCE.setIntakePivot(intakePos);
+                Intake.INSTANCE.setIntakePower(intakePower);
+            }
+        },
+        OUTTAKING {
+            @Override
+            public void apply() {
+                Intake.INSTANCE.setIntakePivot(depositPos);
+                Intake.INSTANCE.setIntakePower(outtakePower);
+            }
+        },
+        EXTENDED {
+            @Override
+            public void apply() {
+                Intake.INSTANCE.setIntakePivot(intakePos);
+            }
+        },
+        MIDPOSITION {
+            @Override
+            public void apply() {
+                Intake.INSTANCE.setIntakePivot(0.2);
+            }
+        },
+        RETRACTED {
+            @Override
+            public void apply() {
+                Intake.INSTANCE.setIntakePivot(depositPos);
+            }
+        };
+
+        public abstract void apply();
     }
 
     public static IntakeState intakeState;
 
-    //motors
+    //Cells
+    public Cell<EnhancedDoubleSupplier> getCurrentCell() {
+        return current;
+    }
+
+    //Hardware Initialization
     private final Cell<DcMotorEx> intake = subsystemCell(() -> getHardwareMap().get(DcMotorEx.class, Constants.Intake.intake));
+
     private final Cell<CachingServo> intakePivot = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Intake.intakePivot)));
 
     private final Cell<EnhancedDoubleSupplier> current = subsystemCell(() -> new EnhancedDoubleSupplier(() -> intake.get().getCurrent(CurrentUnit.MILLIAMPS)));
 
 
-    public void setIntake(IntakeState Intakestate) {
-        Intake.intakeState = Intakestate;
-        switch (intakeState) {
-            case INTAKING:
-                setIntakePivot(intakePos);
-                setIntakePower(intakePower);
-                break;
-            case OUTTAKING:
-                setIntakePivot(depositPos);
-                setIntakePower(outtakePower);
-                break;
-            case EXTENDED:
-                setIntakePivot(intakePos);
-                break;
-            case RETRACTED:
-                setIntakePivot(depositPos);
-                break;
-        }
-    }
 
 
 
-    //init hook
+//Dairy Hooks
+
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
         setIntake(IntakeState.RETRACTED);
         setIntakePower(0);
     }
 
-    //start hook
     @Override
     public void preUserStartHook(@NonNull Wrapper opMode) {
-    }
-
-    public Cell<EnhancedDoubleSupplier> getCurrentCell() {
-        return current;
     }
 
     private void setIntakePivot(double target) {
@@ -115,6 +129,16 @@ public class Intake extends SDKSubsystem {
     private void setIntakePower(double power) {
         intake.get().setPower(power);
     }
+    public void setIntake(IntakeState intakeState) {
+        Intake.intakeState = intakeState;
+        intakeState.apply();
+    }
+    //Lambda Commands
+
+    public Lambda intake(double power) {
+        return new Lambda("intake")
+                .setInit(() -> setIntakePower(power));
+    }
     public Lambda setPivot(double target) {
         return new Lambda("setPivot")
                 .setInit(() -> setIntakePivot(target));
@@ -122,10 +146,6 @@ public class Intake extends SDKSubsystem {
     public Lambda setIntakePosition(IntakeState intakeState) {
         return new Lambda("setIntakePosition")
                 .setInit(() -> setIntake(intakeState));
-    }
-    public Lambda intake(double power) {
-        return new Lambda("intake")
-                .setInit(() -> setIntakePower(power));
     }
 
     public Lambda smartIntakeCommand(double power) {
