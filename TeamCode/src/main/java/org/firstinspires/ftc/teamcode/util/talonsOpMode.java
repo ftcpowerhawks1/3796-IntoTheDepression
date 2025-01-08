@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 
+import dev.frozenmilk.dairy.core.util.features.BulkRead;
 import dev.frozenmilk.mercurial.Mercurial;
 
 @Mercurial.Attach
@@ -17,6 +18,7 @@ import dev.frozenmilk.mercurial.Mercurial;
 @Drive.Attach
 @Outtake.Attach
 @Intake.Attach
+@BulkRead.Attach
 public abstract class talonsOpMode extends OpMode {
 
 }
