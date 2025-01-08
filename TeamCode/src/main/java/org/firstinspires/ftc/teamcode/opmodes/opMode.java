@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import android.widget.HorizontalScrollView;
-
 import com.acmerobotics.dashboard.config.Config;
-import com.outoftheboxrobotics.photoncore.Photon;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
@@ -17,7 +13,6 @@ import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import java.util.concurrent.TimeUnit;
 
-import dev.frozenmilk.dairy.core.util.supplier.logical.EnhancedBooleanSupplier;
 import dev.frozenmilk.mercurial.Mercurial;
 import dev.frozenmilk.mercurial.bindings.BoundBooleanSupplier;
 
@@ -52,8 +47,8 @@ public class opMode extends talonsOpMode {
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
 
-        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-2000));
-        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
+        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(-2000));
+        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(0));
 
 
 

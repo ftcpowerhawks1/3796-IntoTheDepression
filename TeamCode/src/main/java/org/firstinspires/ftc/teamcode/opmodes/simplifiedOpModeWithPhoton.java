@@ -39,8 +39,8 @@ public class simplifiedOpModeWithPhoton extends talonsOpMode {
 
 
         //horizontal slides
-        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-2000));
-        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
+        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(-2000));
+        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(0));
 
 
         //vertical slides

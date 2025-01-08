@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import android.media.MediaRoute2Info;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -14,7 +12,6 @@ import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
-import dev.frozenmilk.mercurial.bindings.BoundBooleanSupplier;
 
 @TeleOp(name = "Simple OpMode", group = "Teleop")
 public class simplifiedOpMode extends talonsOpMode {
@@ -40,8 +37,8 @@ public class simplifiedOpMode extends talonsOpMode {
 
 
         //horizontal slides
-        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.runToPosition(-2000));
-        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.runToPosition(0));
+        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(-2000));
+        Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(0));
 
 
         //vertical slides
