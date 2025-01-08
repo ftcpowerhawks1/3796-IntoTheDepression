@@ -129,7 +129,7 @@ public class Intake extends SDKSubsystem {
     private void setIntakePower(double power) {
         intake.get().setPower(power);
     }
-    public void setIntake(IntakeState intakeState) {
+    private void setIntake(IntakeState intakeState) {
         Intake.intakeState = intakeState;
         intakeState.apply();
     }
