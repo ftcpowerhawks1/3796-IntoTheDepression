@@ -30,6 +30,8 @@ public class simplifiedOpMode extends talonsOpMode {
         Mercurial.gamepad2().rightBumper().onTrue(Outtake.INSTANCE.toggleState());
 
         //intake controls
+        Mercurial.gamepad2().dpadLeft().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
+
         Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
         Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(Intake.INSTANCE.intake(0)));
         //------------------
