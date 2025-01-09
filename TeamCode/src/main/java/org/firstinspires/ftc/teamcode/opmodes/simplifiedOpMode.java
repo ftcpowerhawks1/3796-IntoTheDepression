@@ -43,7 +43,7 @@ public class simplifiedOpMode extends talonsOpMode {
 
         //vertical slides
         Mercurial.gamepad2().dpadRight().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-2500));
-        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4600));
+        Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-5000));
         Mercurial.gamepad2().a().onTrue(VerticalSlides.INSTANCE.setSlidePosition(0));
 
     }
