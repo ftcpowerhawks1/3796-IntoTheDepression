@@ -202,10 +202,11 @@ public class HorizontalSlides extends SDKSubsystem {
     }
 
     //Lambda Commands
+    //TODO Figure out why this doesn't work
     public Lambda setSlidePosition(double target) {
         return new Lambda("set-slide-position-double-horizontal")
                 .setInit(() -> setTarget(target))
-                .setFinish(() -> controller.get().finished()|| opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
+               ;// .setFinish(() -> controller.get().finished() || opmodeWrapper.getState() == Wrapper.OpModeState.STOPPED);
     }
     public Lambda setSlidePosition(SlideState slideState) {
         return new Lambda("set-slide-position-state-horizontal")
