@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import dev.frozenmilk.mercurial.Mercurial;
 import dev.frozenmilk.mercurial.bindings.BoundBooleanSupplier;
+import dev.frozenmilk.mercurial.commands.util.Wait;
 
 @TeleOp(name = "Teleop", group = "Teleop")
 @Config
@@ -39,7 +40,7 @@ public class opMode extends talonsOpMode {
 
         //Intake Pivots
         Mercurial.gamepad2().dpadUp().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.EXTENDED));
-        Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(Intake.INSTANCE.intake(0)));
+        Mercurial.gamepad2().dpadDown().onTrue(Intake.INSTANCE.setIntakePosition(Intake.IntakeState.RETRACTED).then(new Wait(300)).then(Intake.INSTANCE.intake(0)));
 
         //Vertical Slides
         Mercurial.gamepad2().y().onTrue(VerticalSlides.INSTANCE.setSlidePosition(-4800));
