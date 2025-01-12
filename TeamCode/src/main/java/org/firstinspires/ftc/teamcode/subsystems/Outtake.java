@@ -29,19 +29,26 @@ public class Outtake extends SDKSubsystem {
     @Target(ElementType.TYPE)
     @Inherited
     public @interface Attach{}
-
+    //Dependencies for Mercurial
     private Dependency<?> dependency = Subsystem.DEFAULT_DEPENDENCY.and(new SingleAnnotation<>(Attach.class));
-
     @NonNull
     @Override
     public Dependency<?> getDependency() {
         return dependency;
     }
-
     @Override
     public void setDependency(@NonNull Dependency<?> dependency) {
         this.dependency = dependency;
     }
+
+    //Mercuial hooks
+    @Override
+    public void preUserInitHook(@NonNull Wrapper opMode) {
+        outtakePivotLeft.get();
+        outtakePivotRight.get();
+        setOuttakePivot(OuttakePivotState.DOWN);
+    }
+
     //Declare states
     public enum OuttakePivotState {
         UP,
@@ -49,10 +56,11 @@ public class Outtake extends SDKSubsystem {
     }
     public static OuttakePivotState outtakePivotState;
 
-    //Hardware
+    //Hardware initialization
     private final Cell<CachingServo> outtakePivotLeft = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Outtake.outtakePivotLeft)));
     private final Cell<CachingServo> outtakePivotRight = subsystemCell(() -> new CachingServo(getHardwareMap().get(Servo.class, Constants.Outtake.outtakePivotRight)));
 
+    //Functions
     public void setPivotPosition(double position) {
         outtakePivotLeft.get().setPosition(position);
         outtakePivotRight.get().setPosition(position);
@@ -78,6 +86,7 @@ public class Outtake extends SDKSubsystem {
         setPivot(outtakePivotState == OuttakePivotState.UP ? OuttakePivotState.DOWN : OuttakePivotState.UP);
     }
 
+    //Lambdas
     public Lambda setOuttakePivot(Outtake.OuttakePivotState outtakePivotState) {
         return new Lambda("setOuttakePivot")
                 .setInit(() -> setPivot(outtakePivotState));
@@ -91,10 +100,5 @@ public class Outtake extends SDKSubsystem {
                 .setInit(this::togglePivot);
     }
 
-    @Override
-    public void preUserInitHook(@NonNull Wrapper opMode) {
-        outtakePivotLeft.get();
-        outtakePivotRight.get();
-        setOuttakePivot(OuttakePivotState.DOWN);
-    }
+
 }
