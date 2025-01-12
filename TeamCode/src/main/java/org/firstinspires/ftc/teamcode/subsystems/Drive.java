@@ -37,7 +37,7 @@ public class Drive extends SDKSubsystem {
     @Target(ElementType.TYPE)
     @Inherited
     public @interface Attach{}
-
+    //Dependencies for Mercurial
     private Dependency<?> dependency = Subsystem.DEFAULT_DEPENDENCY.and(new SingleAnnotation<>(Attach.class));
 
     @NonNull
@@ -50,7 +50,7 @@ public class Drive extends SDKSubsystem {
     public void setDependency(@NonNull Dependency<?> dependency) {
         this.dependency = dependency;
     }
-
+    //Hardware initialization
     private final Cell<CachingDcMotor> leftFront = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.leftFront)));
     private final Cell<CachingDcMotor> leftBack = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.leftBack)));
     private final Cell<CachingDcMotor> rightFront = subsystemCell(() -> new CachingDcMotor(getHardwareMap().get(DcMotor.class, Constants.Drive.rightFront)));
@@ -62,7 +62,7 @@ public class Drive extends SDKSubsystem {
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.UP));
-
+    //Mercuial hooks
     @Override
     public void preUserInitHook(@NonNull Wrapper opMode) {
         leftFront.get().setDirection(DcMotorSimple.Direction.REVERSE);
@@ -73,7 +73,7 @@ public class Drive extends SDKSubsystem {
         rightBack.get().setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         imu.get().initialize(parameters);
     }
-
+    //Lambdas
     public Lambda driveCommand(boolean isFieldCentric) {
         BoundGamepad gamepad1 = Mercurial.gamepad1();
         return new Lambda("mecanum-drive-robot-centric")
