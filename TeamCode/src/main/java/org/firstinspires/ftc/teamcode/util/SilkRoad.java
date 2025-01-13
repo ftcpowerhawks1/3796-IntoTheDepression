@@ -21,14 +21,14 @@ import dev.frozenmilk.dairy.core.dependency.annotation.SingleAnnotation;
 import dev.frozenmilk.dairy.core.wrapper.Wrapper;
 
 public class SilkRoad implements Feature {
-    private Dependency dependency = new SingleAnnotation<>(org.firstinspires.ftc.teamcode.util.SilkRoad.Attach.class);
+    private Dependency<?> dependency = new SingleAnnotation<>(org.firstinspires.ftc.teamcode.util.SilkRoad.Attach.class);
     private static FtcDashboard dash;
     private static Canvas canvas;
     private static Action actions;
     private static boolean run = true;
     @NonNull
     @Override
-    public Dependency getDependency() { return dependency; }
+    public Dependency<?> getDependency() { return dependency; }
 
     @Override
     public void setDependency(@NonNull Dependency dependency) {
