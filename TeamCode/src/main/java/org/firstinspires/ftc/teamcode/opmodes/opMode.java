@@ -91,4 +91,4 @@ public class opMode extends talonsOpMode {
     }
 }
 
-//TODO Refactor VerticalSlides, and Drive to be cleaner.
+//TODO Refactor VerticalSlides.
