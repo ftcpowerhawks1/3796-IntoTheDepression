@@ -1,6 +1,6 @@
 ## NOTICE
 
-This repository contains the **public** Talons 3796 Code for the INTO THE DEEP (2024-2025) competition season.
+This repository contains the **open source** Talons 3796 Code for the INTO THE DEEP (2024-2025) competition season.
 
 ## Contact 
 
