@@ -8,6 +8,7 @@ public class Constants {
         public static final String rightFront = "rf";
         public static final String rightBack = "rb";
         public static final double imuOffsetDegrees = 90;
+        public static final double MAX_WHEEL_RPM = 435;
     }
 
 
@@ -55,6 +56,11 @@ public class Constants {
         public static final String outtakePivotRight = "RightOuttakeServo";
         public static final double downPos = 0.0;
         public static final double upPos = 0.45;
+    }
+
+    public static final class Vision {
+        public static final String LIMELIGHT_NAME = "limelight";
+        public static final int DEFAULT_PIPELINE = 0;
     }
 
 
