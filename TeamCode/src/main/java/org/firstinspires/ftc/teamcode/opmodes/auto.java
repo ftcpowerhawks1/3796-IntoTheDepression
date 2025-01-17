@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
-import org.firstinspires.ftc.teamcode.util.MercurialAction;
+import org.firstinspires.ftc.teamcode.util.utilActions.MercurialAction;
 import org.firstinspires.ftc.teamcode.util.SilkRoad;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
