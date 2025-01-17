@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.HorizontalSlides;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.subsystems.VerticalSlides;
+import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
@@ -36,8 +37,8 @@ public class simplifiedOpMode extends talonsOpMode {
         Mercurial.gamepad2().rightTrigger().conditionalBindState().greaterThan(0.05).bind().onTrue(Intake.INSTANCE.intake(1.0));
 
 
-        //horizontal slides
-        Mercurial.gamepad2().b().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(-2000));
+        //Horizontal slides
+        Mercurial.gamepad2().b().onTrue(Intake.INSTANCE.setPivot(Constants.Intake.depositPos*3/4).then(HorizontalSlides.INSTANCE.setSlidePosition(-2000)));
         Mercurial.gamepad2().x().onTrue(HorizontalSlides.INSTANCE.setSlidePosition(0));
 
 
