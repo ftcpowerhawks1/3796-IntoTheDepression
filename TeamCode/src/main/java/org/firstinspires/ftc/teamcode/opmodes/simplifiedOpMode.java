@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.util.talonsOpMode;
 
 import dev.frozenmilk.mercurial.Mercurial;
 
-@TeleOp(name = "Simple OpMode", group = "Teleop")
+@TeleOp(name = "Simple OpModet drty", group = "Teleop")
 public class simplifiedOpMode extends talonsOpMode {
     @Override
     public void init() {
