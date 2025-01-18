@@ -22,7 +22,7 @@ public class testAuto extends talonsOpMode {
     Pose2d initialPose = new Pose2d(-35, -61,Math.toRadians(270));
     MecanumDrive drive = new MecanumDrive(hardwareMap,initialPose);
     Action mainAction = drive.actionBuilder(initialPose)
-            .stopAndAdd(new MercurialAction(VerticalSlides.INSTANCE.setSlidePosition(VerticalSlides.SlideState.SPECIMEN_SCORING)))
+            .stopAndAdd(new MercurialAction(HorizontalSlides.INSTANCE.setSlidePosition(HorizontalSlides.SlideState.FULL_EXTEND)))
             .build();
 
     @Override
