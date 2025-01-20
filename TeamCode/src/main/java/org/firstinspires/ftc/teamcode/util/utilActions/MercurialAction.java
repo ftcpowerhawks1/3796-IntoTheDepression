@@ -11,7 +11,6 @@ import dev.frozenmilk.mercurial.commands.Command;
 public class MercurialAction implements Action {
     private final Command command;
     private boolean initialized = false;
-    private boolean secondCycle = false;
     public MercurialAction(Command command) {
         this.command = command;
     }
@@ -22,11 +21,9 @@ public class MercurialAction implements Action {
         if (!initialized) {
             command.schedule();
             this.initialized = true;
-        } 
-        if (initialized && !Mercurial.isScheduled(command)){
-            secondCycle = true;
         }
-        final boolean finished = initialized && secondCycle && !Mercurial.isScheduled(command);
+        //Want to make sure it is initialized and not scheduled
+        final boolean finished = !Mercurial.isScheduled(command);
         if (finished) this.initialized = false;
         return finished;
     }
