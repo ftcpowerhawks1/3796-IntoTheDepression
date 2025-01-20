@@ -17,14 +17,12 @@ public class MercurialAction implements Action {
 
     @Override
     public boolean run(@NonNull TelemetryPacket packet) {
-        final boolean initialized = this.initialized;
+
         if (!initialized) {
             command.schedule();
-            this.initialized = true;
+            initialized = true;
         }
         //Want to make sure it is initialized and not scheduled
-        final boolean finished = !Mercurial.isScheduled(command);
-        if (finished) this.initialized = false;
-        return finished;
+        return Mercurial.isScheduled(command);
     }
 }
