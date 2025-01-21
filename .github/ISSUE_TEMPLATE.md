@@ -1,5 +1,5 @@
 ---
-title: Someone just pushed
+title: {{ payload.sender.login }} just pushed
 assignees: Blaziumm
 labels: bug, enhancement
 ---
