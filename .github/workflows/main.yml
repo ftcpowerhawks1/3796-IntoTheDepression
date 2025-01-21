@@ -1,2 +1,2 @@
-- name: Create an issue
-  uses: JasonEtco/create-an-issue@v2.9.2
+name: Create an issue
+uses: JasonEtco/create-an-issue@v2.9.2
