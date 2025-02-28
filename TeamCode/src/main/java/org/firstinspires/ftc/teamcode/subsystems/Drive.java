@@ -102,10 +102,10 @@ public class Drive extends SDKSubsystem {
                     double backRightPower = (rotY + rotX - rx) / denominator;
 
                     double denominator2 = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-                    double frontLeftPower2 = (y + x + rx) / denominator;
-                    double backLeftPower2 = (y - x + rx) / denominator;
-                    double frontRightPower2 = (y - x - rx) / denominator;
-                    double backRightPower2 = (y + x - rx) / denominator;
+                    double frontLeftPower2 = (y + x + rx) / denominator2;
+                    double backLeftPower2 = (y - x + rx) / denominator2;
+                    double frontRightPower2 = (y - x - rx) / denominator2;
+                    double backRightPower2 = (y + x - rx) / denominator2;
 
                     if (isFieldCentric) {
                         leftFront.get().setPower(frontLeftPower);
