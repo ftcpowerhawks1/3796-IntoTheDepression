@@ -78,6 +78,8 @@ public class Drive extends SDKSubsystem {
         BoundGamepad gamepad1 = Mercurial.gamepad1();
         return new Lambda("mecanum-drive-robot-centric")
                 .setInit(() -> {})
+                .addRequirements(INSTANCE)
+                .setInterruptible(() -> true)
                 .setExecute(() -> {
                     double y = gamepad1.leftStickY().state();
                     double x = gamepad1.leftStickX().state();
@@ -131,6 +133,8 @@ public class Drive extends SDKSubsystem {
         BoundGamepad gamepad1 = Mercurial.gamepad1();
         return new Lambda("mecanum-drive-robot-centric")
                 .setInit(() -> {})
+                .addRequirements(INSTANCE)
+                .setInterruptible(() -> true)
                 .setExecute(() -> {
                     double y = gamepad1.leftStickY().state();
                     double x = gamepad1.leftStickX().state();
